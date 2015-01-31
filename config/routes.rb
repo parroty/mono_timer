@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :timer, :only => [:index]
+  get 'timer/new'
   get "timer/list"
 
   # The priority is based upon order of creation: first created -> highest priority.

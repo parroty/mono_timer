@@ -18,4 +18,11 @@ class TimerIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal 200, response.status
     assert_match "Programming", response.body
   end
+
+  test "gets new timer page" do
+    get "/timer/new"
+
+    assert_equal 200, response.status
+    assert_match "New Timer", response.body
+  end
 end
