@@ -1,8 +1,12 @@
 require "test_helper"
 
-class TimerOperationTest < Capybara::Rails::TestCase
+class TimerFeatureTest < Capybara::Rails::TestCase
   setup do
     Timer.create!(start_time: DateTime.now, status: Timer::STATUS_ACTIVE, category: "Programming")
+  end
+
+  test "root page redirects to timer#index page" do
+    visit '/'
   end
 
   test "gets timer index page" do
