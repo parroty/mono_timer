@@ -6,9 +6,9 @@ class TimerFeatureTest < Capybara::Rails::TestCase
     assert_content page, "Mono Timer"
   end
 
-  test "gets timer list page" do
-    visit '/timer/list'
-    assert_content page, "Timer List"
+  test "gets timer history page" do
+    visit '/timer/history'
+    assert_content page, "Timer History"
   end
 
   test "gets new timer page" do

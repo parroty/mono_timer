@@ -6,7 +6,7 @@ class TimerController < ApplicationController
     @timer = Timer.new
   end
 
-  def list
+  def history
     @timers = Timer.all
   end
 
@@ -17,6 +17,6 @@ class TimerController < ApplicationController
 
   def destroy
     Timer.find(params[:id]).destroy!
-    redirect_to timer_list_path
+    redirect_to timer_history_path
   end
 end

@@ -11,10 +11,10 @@ class TimerControllerTest < ActionController::TestCase
     must_render_template :index
   end
 
-  test "gets timer list page succeeds" do
-    get :list
+  test "gets timer history page succeeds" do
+    get :history
     assert_response :success
-    must_render_template :list
+    must_render_template :history
   end
 
   test "gets new timer page succeeds" do
@@ -28,8 +28,8 @@ class TimerControllerTest < ActionController::TestCase
     assert_redirected_to timer_index_path
   end
 
-  test "delete timer succeeds and gets redirected to list page" do
+  test "delete timer succeeds and gets redirected to history page" do
     delete :destroy, id: @timer.id
-    assert_redirected_to timer_list_path
+    assert_redirected_to timer_history_path
   end
 end
