@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   resources :timer, :only => [:index]
   get 'timer/new'
   get "timer/list"
+  post "timer/create"
 end

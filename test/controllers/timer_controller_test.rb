@@ -19,4 +19,9 @@ class TimerControllerTest < ActionController::TestCase
     get :new
     assert_response :success
   end
+
+  test "create timer page succeeds and redirect to index page" do
+    post :create
+    assert_response :redirect
+  end
 end
