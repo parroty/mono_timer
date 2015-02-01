@@ -1,4 +1,28 @@
 <h1>Timer List</h1>
-<% @timers.each do |timer| %>
-  <%= timer.start_time %> : <%= timer.category %>
-<% end %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Status</th>
+      <th>Category</th>
+      <th>Created</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @timers.each do |timer| %>
+      <tr>
+        <td><%= timer.start_time %></td>
+        <td><%= timer.end_time %></td>
+        <td><%= timer.status %></td>
+        <td><%= timer.category %></td>
+        <td><%= timer.created_at %></td>
+        <td>
+          <%= button_to 'Destroy', timer_path(timer), :method => :delete, :class => 'btn btn-mini btn-danger' %>
+        </td.
+      </tr>
+    <% end %>
+  </tbody>
+</table>
