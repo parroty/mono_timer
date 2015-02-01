@@ -2,3 +2,7 @@
 
 <%= button_to "Start", { controller: 'timer', action: 'create' }, method: :post, class: 'btn btn-success' %>
 <button class='btn btn-primary'>Stop</button>
+
+<div id='timer-time' class='timer-time'>
+  <%= @remaining_time %>
+</div>

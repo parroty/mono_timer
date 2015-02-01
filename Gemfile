@@ -41,10 +41,11 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
+  gem 'byebug'
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
-  gem 'byebug'
+  gem 'timecop'
 end
 
-gem "twitter-bootstrap-rails"
 gem 'simple_form'
+gem "twitter-bootstrap-rails"
