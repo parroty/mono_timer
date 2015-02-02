@@ -11,4 +11,8 @@
   <div class='footer'>
     <%= link_to "History", { controller: 'timer', action: 'history'} %>
   </div>
+
+  <%= javascript_tag do %>
+    window.timerCount = '<%= @remaining_time %>';
+  <% end %>
 </div>
