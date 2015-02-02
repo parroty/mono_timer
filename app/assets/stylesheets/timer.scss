@@ -1,3 +1,22 @@
 // Place all the styles related to the timer controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.timer-container {
+  text-align: center;
+}
+
+.timer-time {
+  font-size: 48px;
+  padding: 20px;
+}
+
+form.button_to {
+  display: inline;
+  padding: 10px;
+}
+
+.btn-xl {
+  padding: 18px 28px;
+  font-size: 22px;
+  border-radius: 8px;
+}
