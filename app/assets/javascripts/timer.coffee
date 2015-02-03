@@ -6,10 +6,12 @@ $ ->
 
   if isTimerActive == 'true'
     timerId = setInterval ->
-      remainingSeconds -= 1
-      updateTimer(remainingSeconds)
-      if remainingSeconds == 0
+      if remainingSeconds > 0
+        remainingSeconds -= 1
+      else
         clearInterval(timerId)
+
+      updateTimer(remainingSeconds)
     , 1000
 
 updateTimer = (remainingSeconds) ->
