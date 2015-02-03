@@ -32,4 +32,9 @@ class TimerControllerTest < ActionController::TestCase
     delete :destroy, id: @timer.id
     assert_redirected_to timer_history_path
   end
+
+  test "stop timer succeeds and gets redirected to index page" do
+    post :stop, id: @timer.id
+    assert_redirected_to timer_index_path
+  end
 end

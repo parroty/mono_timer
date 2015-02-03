@@ -5,8 +5,12 @@
     <%= seconds_to_timer_str(@timer.remaining_seconds) %>
   </div>
 
-  <%= button_to "Start", { controller: 'timer', action: 'create' }, method: :post, class: 'btn btn-success btn-xl' %>
-  <%= button_to "Stop",  { controller: 'timer', action: 'create' }, method: :post, class: 'btn btn-primary btn-xl' %>
+  <%= button_to "Start",
+    { controller: 'timer', action: 'create' },
+      method: :post, class: 'btn btn-success btn-xl' %>
+  <%= button_to "Stop",
+    { controller: 'timer', action: 'stop', id: @timer.id},
+      method: :post, class: 'btn btn-primary btn-xl' %>
 
   <div class='footer'>
     <%= link_to "History", { controller: 'timer', action: 'history'} %>

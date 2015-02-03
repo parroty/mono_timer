@@ -20,4 +20,10 @@ class TimerController < ApplicationController
     Timer.find(params[:id]).destroy!
     redirect_to timer_history_path
   end
+
+  def stop
+    timer = Timer.find(params[:id])
+    timer.update!(end_time: DateTime.now)
+    redirect_to timer_index_path
+  end
 end
