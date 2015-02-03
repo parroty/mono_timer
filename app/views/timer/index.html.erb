@@ -1,7 +1,9 @@
 <div class='timer-container'>
   <h1>Mono Timer</h1>
 
-  <div id='timer-time' class='timer-time'></div>
+  <div id='timer-time' class='timer-time'>
+    <%= seconds_to_timer_str(@timer.remaining_seconds) %>
+  </div>
 
   <%= button_to "Start", { controller: 'timer', action: 'create' }, method: :post, class: 'btn btn-success btn-xl' %>
   <%= button_to "Stop",  { controller: 'timer', action: 'create' }, method: :post, class: 'btn btn-primary btn-xl' %>
