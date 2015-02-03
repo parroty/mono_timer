@@ -2,6 +2,10 @@ require 'test_helper'
 
 module TimerTest
   class SingleTimerTest < ActiveSupport::TestCase
+    setup do
+      Timer.all.delete_all
+    end
+
     test "timer with no end_time is taken as active timer" do
       timer = Timer.create(start_time: 5.minutes.ago, end_time: nil)
       assert_equal true, timer.counting_down?

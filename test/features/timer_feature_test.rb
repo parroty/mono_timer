@@ -1,21 +1,15 @@
 require "test_helper"
 
 module TimerFeatureTest
-  class WithNoActiveTimerTest < Capybara::Rails::TestCase
+  class WithNoTimerTest < Capybara::Rails::TestCase
+    setup do
+      Timer.all.delete_all
+    end
+
     test "timer index page has string for 1500 seconds (25:00)" do
       visit '/timer'
       assert_content "25:00"
       assert_match "1500", page.body
-    end
-
-    test "gets timer history page" do
-      visit '/timer/history'
-      assert_content page, "Timer History"
-    end
-
-    test "gets new timer page" do
-      visit '/timer/new'
-      assert_content page, "New Timer"
     end
 
     test "click Start button creates and increases the timer count and still shows the index page" do
@@ -26,6 +20,16 @@ module TimerFeatureTest
 
       assert_equal timer_count + 1, Timer.count
       assert_equal timer_index_path, current_path
+    end
+
+    test "gets timer history page" do
+      visit '/timer/history'
+      assert_content page, "Timer History"
+    end
+
+    test "gets new timer page" do
+      visit '/timer/new'
+      assert_content page, "New Timer"
     end
   end
 
