@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TimerControllerTest < ActionController::TestCase
   setup do
-    @timer = Timer.create!(start_time: DateTime.now, status: Timer::STATUS_ACTIVE, category: "Programming")
+    @timer = Timer.create!(start_time: DateTime.now, category: "Programming")
   end
 
   test "get index succeeds" do

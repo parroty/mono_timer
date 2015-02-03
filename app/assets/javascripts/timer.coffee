@@ -2,18 +2,24 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
-  timerId = setInterval ->
-    timerCount -= 1
-    $("#timer-time").text(seconds_to_timer_str(timerCount))
-    if timerCount == 0
-      clearInterval(timerId)
-  , 1000
+  updateTimer(remainingSeconds)
 
-seconds_to_timer_str = (count) ->
+  if isTimerActive == 'true'
+    timerId = setInterval ->
+      remainingSeconds -= 1
+      updateTimer(remainingSeconds)
+      if remainingSeconds == 0
+        clearInterval(timerId)
+    , 1000
+
+updateTimer = (remainingSeconds) ->
+  $("#timer-time").text(secondsToTimerString(remainingSeconds))
+
+secondsToTimerString = (count) ->
   minutes = Math.floor(count / 60)
   seconds = count % 60
-  return padding(minutes) + ":" + padding(seconds)
+  return zeroPadding(minutes) + ":" + zeroPadding(seconds)
 
-padding = (number) ->
+zeroPadding = (number) ->
   string = "00" + String(number);
   return string.substr(string.length - 2);

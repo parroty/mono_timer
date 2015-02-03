@@ -1,9 +1,7 @@
 <div class='timer-container'>
   <h1>Mono Timer</h1>
 
-  <div id='timer-time' class='timer-time'>
-    <%= seconds_to_timer_str(@remaining_time) %>
-  </div>
+  <div id='timer-time' class='timer-time'></div>
 
   <%= button_to "Start", { controller: 'timer', action: 'create' }, method: :post, class: 'btn btn-success btn-xl' %>
   <%= button_to "Stop",  { controller: 'timer', action: 'create' }, method: :post, class: 'btn btn-primary btn-xl' %>
@@ -13,6 +11,7 @@
   </div>
 
   <%= javascript_tag do %>
-    window.timerCount = '<%= @remaining_time %>';
+    window.remainingSeconds = '<%= @timer.remaining_seconds %>';
+    window.isTimerActive = '<%= @timer.counting_down? %>';
   <% end %>
 </div>

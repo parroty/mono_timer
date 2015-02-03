@@ -1,7 +1,6 @@
 class TimerController < ApplicationController
   def index
-    timer = Timer.where("end_time IS NULL").first
-    @remaining_time = timer.try(:remaining_seconds) || Timer::INITIAL_TIME
+    @timer = Timer.latest_timer
   end
 
   def new

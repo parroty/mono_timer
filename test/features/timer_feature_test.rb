@@ -2,12 +2,9 @@ require "test_helper"
 
 module TimerFeatureTest
   class WithActiveTimer < Capybara::Rails::TestCase
-    setup do
-    end
-
-    test "timer index page shows 25:00" do
+    test "timer index page has string for 1500 seconds (25:00)" do
       visit '/timer'
-      assert_content page, "25:00"
+      assert_match "1500", page.body
     end
   end
 
@@ -21,9 +18,9 @@ module TimerFeatureTest
       Timecop.return
     end
 
-    test "timer index page shows remaining time (25:00 - 10:00 -> 15:00)" do
+    test "timer index page shows remaining time string for 900 seconds (25:00 - 10:00 -> 15:00)" do
       visit '/timer'
-      assert_content page, "15:00"
+      assert_match "900", page.body
     end
   end
 
