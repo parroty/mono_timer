@@ -48,14 +48,5 @@ module TimerFeatureTest
       assert_content "15:00"
       assert_match "900", page.body
     end
-
-    test "click Stop button stops timer which fills in the stop_time" do
-      active_timer_count = Timer.active.count
-
-      visit '/timer'
-      click_button('Stop')
-
-      assert_equal active_timer_count - 1, Timer.active.count
-    end
   end
 end

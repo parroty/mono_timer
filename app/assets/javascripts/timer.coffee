@@ -1,6 +1,13 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+
+timerId = null
+
+window.stopTimer = (id) ->
+  clearInterval(timerId)
+  $.ajax "/timer/" + id + "/stop", type: 'POST'
+
 $ ->
   updateTimer(remainingSeconds)
 
