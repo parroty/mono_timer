@@ -7,6 +7,18 @@ class Timer < ActiveRecord::Base
     Timer.order("id desc").first || Timer.new(start_time: nil)
   end
 
+  def self.stop_timer!(id)
+    timer = Timer.find(id)
+    timer.stop
+    timer.save
+  end
+
+  def stop
+    if counting_down?
+      update(end_time: DateTime.now)
+    end
+  end
+
   def counting_down?
     start_time != nil && end_time == nil
   end

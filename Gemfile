@@ -46,5 +46,7 @@ group :development, :test do
   gem 'timecop'
 end
 
+gem 'sidekiq'
 gem 'simple_form'
+gem 'sinatra', :require => nil
 gem "twitter-bootstrap-rails"

@@ -3,4 +3,7 @@ Rails.application.routes.draw do
   resources :timer, except: [:show]
   get "timer/history"
   post "timer/:id/stop" => 'timer#stop', as: :timer_stop
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 end

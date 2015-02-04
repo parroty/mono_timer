@@ -14,7 +14,8 @@
     class: 'btn btn-primary btn-xl' %>
 
   <div class='footer'>
-    <%= link_to "History", { controller: 'timer', action: 'history'} %>
+    <%= link_to "[History]", { controller: 'timer', action: 'history'} %>
+    <%= link_to '[Monitoring]', sidekiq_web_path %>
   </div>
 
   <%= javascript_tag do %>

@@ -30,6 +30,19 @@ module TimerTest
       timer = Timer.latest_timer
       assert_equal nil, timer.start_time
     end
+
+    test "Timer.stop_timer stops active timer" do
+      timer = Timer.create(start_time: 5.minutes.ago, end_time: nil)
+      Timer.stop_timer!(timer.id)
+      assert_equal false, timer.reload.counting_down?
+    end
+
+    test "Timer.stop_timer does not change the end_time of already stopped tiemr" do
+      original_end_time = 5.minutes.ago
+      timer = Timer.create(start_time: 30.minutes.ago, end_time: original_end_time)
+      Timer.stop_timer!(timer.id)
+      assert_equal original_end_time, timer.end_time
+    end
   end
 
   class MixtureTimerTest < ActiveSupport::TestCase

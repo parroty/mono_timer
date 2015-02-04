@@ -51,6 +51,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    celluloid (0.16.0)
+      timers (~> 4.0.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -59,6 +61,7 @@ GEM
       execjs
     coffee-script-source (1.9.0)
     columnize (0.9.0)
+    connection_pool (2.1.1)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
     erubis (2.7.0)
@@ -66,6 +69,7 @@ GEM
     globalid (0.3.0)
       activesupport (>= 4.1.0)
     hike (1.2.3)
+    hitimes (1.2.2)
     i18n (0.7.0)
     jbuilder (2.2.6)
       activesupport (>= 3.0.0, < 5)
@@ -105,6 +109,8 @@ GEM
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     rack (1.6.0)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.0)
@@ -133,6 +139,9 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     rdoc (4.2.0)
+    redis (3.2.0)
+    redis-namespace (1.5.1)
+      redis (~> 3.0, >= 3.0.4)
     ruby-progressbar (1.7.1)
     sass (3.4.11)
     sass-rails (5.0.1)
@@ -144,9 +153,19 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    sidekiq (3.3.1)
+      celluloid (>= 0.16.0)
+      connection_pool (>= 2.1.1)
+      json
+      redis (>= 3.0.6)
+      redis-namespace (>= 1.3.1)
     simple_form (3.1.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     slop (3.6.0)
     spring (1.2.0)
     sprockets (2.12.3)
@@ -163,6 +182,8 @@ GEM
     thread_safe (0.3.4)
     tilt (1.4.1)
     timecop (0.7.1)
+    timers (4.0.1)
+      hitimes
     turbolinks (2.5.3)
       coffee-rails
     twitter-bootstrap-rails (3.2.0)
@@ -196,7 +217,9 @@ DEPENDENCIES
   rails (= 4.2.0)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  sidekiq
   simple_form
+  sinatra
   spring
   sqlite3
   timecop
