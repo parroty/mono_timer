@@ -8,7 +8,7 @@ class TimerController < ApplicationController
   end
 
   def history
-    @timers = Timer.all
+    @timers = Timer.order(:id).reverse
   end
 
   def create
