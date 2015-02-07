@@ -1,15 +1,13 @@
 class StopTimerWorker
   include Sidekiq::Worker
 
-  def perform(timer_id, options = {})
+  def perform(timer_id, send_notification = false)
     timer = Timer.find(timer_id)
     if timer.remaining_seconds > 0
       raise "Timer(#{timer_id}) still has #{timer.remaining_seconds} seconds."
     else
       timer.stop!
-      if options[:notification]
-        PushoverNotifier.new.notify("Timer #{timer_id} completed.")
-      end
+      PushoverNotifier.new.notify("Timer #{timer_id} completed.") if send_notification
     end
   end
 end

@@ -28,6 +28,6 @@ class StopTimerWorkerTest < ActiveSupport::TestCase
     timer = Timer.create(start_time: 30.minutes.ago, end_time: nil)
     PushoverNotifier.any_instance.expects(:notify).with("Timer #{timer.id} completed.")
 
-    StopTimerWorker.new.perform(timer.id, notification: true)
+    StopTimerWorker.new.perform(timer.id, true)
   end
 end

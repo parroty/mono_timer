@@ -4,6 +4,7 @@ require 'rails/test_help'
 require 'minitest/pride'
 require 'minitest/rails/capybara'
 require 'minitest/reporters'
+require 'mocha/setup'
 require 'sidekiq/testing'
 
 Sidekiq::Testing.fake!

@@ -23,7 +23,9 @@ class Timer < ActiveRecord::Base
   end
 
   def remaining_seconds
-    if start_time != nil
+    if start_time != nil && end_time != nil
+      0
+    elsif start_time != nil && end_time == nil
       time_passed = ((end_time || Time.zone.now) - start_time).to_i
       [INITIAL_TIME - time_passed, 0].max
     else

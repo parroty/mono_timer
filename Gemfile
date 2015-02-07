@@ -43,7 +43,7 @@ group :development, :test do
 
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
-  gem 'mocha'
+  gem 'mocha', require: 'mocha/api'
   gem 'timecop'
 end
 
