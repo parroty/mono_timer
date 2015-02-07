@@ -43,9 +43,11 @@ group :development, :test do
 
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
+  gem 'mocha'
   gem 'timecop'
 end
 
+gem 'pushover'
 gem 'sidekiq'
 gem 'simple_form'
 gem 'sinatra', :require => nil

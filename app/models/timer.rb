@@ -9,11 +9,10 @@ class Timer < ActiveRecord::Base
 
   def self.stop_timer!(id)
     timer = Timer.find(id)
-    timer.stop
-    timer.save
+    timer.stop!
   end
 
-  def stop
+  def stop!
     if counting_down?
       update(end_time: DateTime.now)
     end

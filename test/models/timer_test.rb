@@ -26,6 +26,12 @@ module TimerTest
       assert_equal 0, timer.remaining_seconds
     end
 
+    test "stop! method fills in end_time" do
+      timer = Timer.create(start_time: 1.hour.ago, end_time: nil)
+      timer.stop!
+      assert_not_equal nil, timer.reload.end_time
+    end
+
     test "Timer.latest_timer returns blank timer if there's no active timer" do
       timer = Timer.latest_timer
       assert_equal nil, timer.start_time

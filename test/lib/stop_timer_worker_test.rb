@@ -12,15 +12,22 @@ class StopTimerWorkerTest < ActiveSupport::TestCase
     assert_equal 1, StopTimerWorker.jobs.size
   end
 
-  test "successfully stop timer with 0 remaining time" do
+  test "successfully stop timer and send notification with 0 remaining time" do
     timer = Timer.create(start_time: 30.minutes.ago, end_time: nil)
     StopTimerWorker.new.perform(timer.id)
-    assert timer.reload.end_time != nil
+    assert_not_equal nil, timer.reload.end_time
   end
 
-  test "trying to stop timer with remaining time fails " do
+  test "trying to stop timer with remaining time fails" do
     assert_raises RuntimeError do
       StopTimerWorker.new.perform(@timer.id)
     end
+  end
+
+  test "sends notification if notification: true option is specified" do
+    timer = Timer.create(start_time: 30.minutes.ago, end_time: nil)
+    PushoverNotifier.any_instance.expects(:notify).with("Timer #{timer.id} completed.")
+
+    StopTimerWorker.new.perform(timer.id, notification: true)
   end
 end
