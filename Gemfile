@@ -57,7 +57,7 @@ group :development, :test do
   gem 'timecop'
 end
 
-gem 'puma'
+gem 'unicorn'
 gem 'pushover'
 gem 'sidekiq'
 gem 'simple_form'
