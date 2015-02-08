@@ -13,7 +13,7 @@ class TimerController < ApplicationController
 
   def create
     timer = Timer.create!(start_time: DateTime.now)
-    StopTimerWorker.perform_in(Timer::INITIAL_TIME, timer.id, true)
+    StopTimerService.create(timer.id)
     redirect_to timer_index_path
   end
 
@@ -24,6 +24,7 @@ class TimerController < ApplicationController
 
   def stop
     Timer.stop_timer!(params[:id])
+    StopTimerService.destroy(params[:id])
     redirect_to timer_index_path
   end
 end
