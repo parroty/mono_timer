@@ -1,7 +1,7 @@
 require "test_helper"
 
-class TimerHistoryFeatureTest < Capybara::Rails::TestCase
-  test "delete button in the history page deletes the timer record" do
+describe "timer history", :capybara do
+  it "deletes timer record" do
     timer_count = Timer.count
 
     visit timer_history_path
