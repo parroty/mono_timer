@@ -12,6 +12,10 @@ class Timer < ActiveRecord::Base
     timer.stop!
   end
 
+  def self.completed_counts_at(date_or_time)
+    Timer.where("DATE(end_time) = ?", date_or_time.to_date).count
+  end
+
   def stop!
     if counting_down?
       update(end_time: DateTime.now)

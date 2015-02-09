@@ -8,7 +8,10 @@ class StopTimerWorker
       raise "Timer(#{timer_id}) still has #{timer.remaining_seconds} seconds."
     else
       timer.stop!
-      PushoverNotifier.new.notify("Timer #{timer_id} completed.") if send_notification
+      if send_notification
+        count = Timer.completed_counts_at(Date.today) + 1
+        PushoverNotifier.new.notify("#{count.ordinalize} timer of today completed.")
+      end
     end
   end
 end

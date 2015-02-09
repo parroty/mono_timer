@@ -49,6 +49,18 @@ module TimerTest
       Timer.stop_timer!(timer.id)
       assert_equal original_end_time, timer.end_time
     end
+
+    test "Timer.completed_counts_at returns 0 if there's no completed timer" do
+      today = Time.zone.local(2015, 1, 1)
+      timer = Timer.create(start_time: 30.minutes.ago, end_time: nil)
+      assert_equal 0, Timer.completed_counts_at(today)
+    end
+
+    test "Timer.completed_counts_at returns 1 if there's one completed timer" do
+      today = Time.mktime(2015, 1, 1, 15, 0, 0)
+      timer = Timer.create(start_time: 30.minutes.ago, end_time: today)
+      assert_equal 1, Timer.completed_counts_at(today)
+    end
   end
 
   class MixtureTimerTest < ActiveSupport::TestCase

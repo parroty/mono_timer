@@ -26,7 +26,9 @@ class StopTimerWorkerTest < ActiveSupport::TestCase
 
   test "sends notification if notification: true option is specified" do
     timer = Timer.create(start_time: 30.minutes.ago, end_time: nil)
-    PushoverNotifier.any_instance.expects(:notify).with("Timer #{timer.id} completed.")
+    PushoverNotifier.any_instance.expects(:notify).with do |param|
+      param =~ /timer of today completed/
+    end
 
     StopTimerWorker.new.perform(timer.id, true)
   end
