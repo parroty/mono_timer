@@ -1,5 +1,6 @@
 class StopTimerWorker
   include Sidekiq::Worker
+  sidekiq_options :retry => 5
 
   def perform(timer_id, send_notification = false)
     timer = Timer.find(timer_id)
