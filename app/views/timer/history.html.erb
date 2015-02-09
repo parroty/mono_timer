@@ -10,9 +10,6 @@
       <th>ID</th>
       <th>Start Time</th>
       <th>End Time</th>
-      <th>Status</th>
-      <th>Category</th>
-      <th>Created</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -20,11 +17,8 @@
     <% @timers.each do |timer| %>
       <tr>
         <td><%= timer.id %></td>
-        <td><%= timer.start_time %></td>
-        <td><%= timer.end_time %></td>
-        <td><%= timer.status %></td>
-        <td><%= timer.category %></td>
-        <td><%= timer.created_at %></td>
+        <td><%= to_display_time(timer.start_time) %></td>
+        <td><%= to_display_time(timer.end_time) %></td>
         <td>
           <%= button_to 'Destroy', timer_path(timer), :method => :delete, :class => 'btn btn-mini btn-danger' %>
         </td.
