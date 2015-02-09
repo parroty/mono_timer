@@ -4,6 +4,6 @@ module TimerHelper
   end
 
   def to_display_time(datetime)
-    datetime.strftime("%Y/%m/%d %H:%M:%S")
+    datetime.strftime("%Y/%m/%d %H:%M:%S") if datetime
   end
 end
