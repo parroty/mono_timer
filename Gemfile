@@ -57,6 +57,7 @@ group :development, :test do
   gem 'timecop'
 end
 
+gem 'kaminari'
 gem 'unicorn'
 gem 'pushover'
 gem 'sidekiq'

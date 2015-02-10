@@ -1,5 +1,6 @@
 class Timer < ActiveRecord::Base
   INITIAL_TIME = 25 * 60
+  paginates_per 50
 
   scope :active, -> { where("end_time is NULL") }
 
@@ -17,9 +18,7 @@ class Timer < ActiveRecord::Base
   end
 
   def stop!
-    if counting_down?
-      update(end_time: DateTime.now)
-    end
+    update(end_time: DateTime.now) if counting_down?
   end
 
   def counting_down?
