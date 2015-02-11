@@ -10,6 +10,7 @@
       <th>ID</th>
       <th>Start Time</th>
       <th>End Time</th>
+      <th>Pauses</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -19,6 +20,13 @@
         <td><%= timer.id %></td>
         <td><%= to_display_time(timer.start_time) %></td>
         <td><%= to_display_time(timer.end_time) %></td>
+        <td>
+          <% if timer.pauses.count > 0 %>
+            <%= link_to timer.pauses.count, timer_pauses_path(timer) %>
+          <% else %>
+            <%= timer.pauses.count %>
+          <% end %>
+          </td>
         <td>
           <%= button_to 'Destroy', timer_path(timer), :method => :delete, :class => 'btn btn-mini btn-danger' %>
         </td.

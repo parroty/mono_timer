@@ -8,7 +8,7 @@ class TimerController < ApplicationController
   end
 
   def history
-    @timers = Timer.page(params[:page]).order("id desc")
+    @timers = Timer.includes(:pauses).page(params[:page]).order("id desc")
   end
 
   def create
@@ -36,6 +36,10 @@ class TimerController < ApplicationController
   def resume
     timer.pauses.each { |pause| pause.complete }
     redirect_to timer_index_path
+  end
+
+  def pauses
+    @timer = timer
   end
 
 private

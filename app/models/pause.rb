@@ -1,5 +1,5 @@
 class Pause < ActiveRecord::Base
-  belongs_to :timer
+  belongs_to :timer, counter_cache: true
 
   def active?
     end_time == nil
