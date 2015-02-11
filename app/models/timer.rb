@@ -24,17 +24,21 @@ class Timer < ActiveRecord::Base
   end
 
   def counting_down?
-    start_time != nil && end_time == nil
+    start_time != nil && end_time == nil && has_active_pause? == false
   end
 
   def remaining_seconds
-    if start_time != nil && end_time != nil
-      0
-    elsif start_time != nil && end_time == nil
-      time_passed = ((end_time || Time.zone.now) - start_time).to_i
-      [INITIAL_TIME - time_passed, 0].max
+    if start_time != nil && end_time == nil
+      passed = ((end_time || Time.zone.now) - start_time).to_i
+      remaining = INITIAL_TIME - passed
+      [remaining, 0].max
     else
       INITIAL_TIME
     end
+  end
+
+private
+  def has_active_pause?
+    pauses.any? { |pause| pause.end_time == nil }
   end
 end

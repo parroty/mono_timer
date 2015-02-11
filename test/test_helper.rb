@@ -15,3 +15,11 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+def js_for_remaining_time(seconds)
+  "window.remainingSeconds = '#{seconds}'"
+end
+
+def js_for_timer_state(state)
+  "window.isCountingDown = '#{state[:counting_down]}'"
+end

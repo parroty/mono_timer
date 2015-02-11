@@ -10,9 +10,9 @@
       method: :post, class: 'btn btn-success btn-xl' %>
 
   <% if @timer.id %>
-    <%= button_to "Stop", "#",
-      onclick: "stopTimer(" + @timer.id.to_s + "); return false;",
-      class: 'btn btn-primary btn-xl' %>
+    <%= button_to "Stop",
+      { controller: 'timer', action: 'stop', id: @timer.id},
+        method: :post, class: 'btn btn-success btn-xl' %>
 
     <%= button_to "Pause",
       { controller: 'timer', action: 'pause', id: @timer.id},
@@ -32,6 +32,6 @@
 
   <%= javascript_tag do %>
     window.remainingSeconds = '<%= @timer.remaining_seconds %>';
-    window.isTimerActive = '<%= @timer.counting_down? %>';
+    window.isCountingDown = '<%= @timer.counting_down? %>';
   <% end %>
 </div>

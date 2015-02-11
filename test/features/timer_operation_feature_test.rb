@@ -11,12 +11,13 @@ describe "timer operation feature", :capybara do
       Timer.create(start_time: 5.minutes.ago, end_time: nil)
     end
 
-    it "creates pause record" do
+    it "pauses timer returns not counting-down timer" do
       visit '/timer'
       click_button('Pause')
 
-      assert_equal 1, Timer.active.count
       assert_equal 1, Pause.count
+      assert page.has_content?("20:00")
+      assert_match js_for_timer_state(counting_down: false), page.body
     end
   end
 

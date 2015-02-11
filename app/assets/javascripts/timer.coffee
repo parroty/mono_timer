@@ -1,13 +1,9 @@
 timerId = null
 
-window.stopTimer = (id) ->
-  clearInterval(timerId)
-  $.ajax "/timer/" + id + "/stop", type: 'POST'
-
 $ ->
   updateTimerDisplay(remainingSeconds)
 
-  if isTimerActive == 'true'
+  if isCountingDown == 'true'
     timerId = setInterval ->
       if remainingSeconds > 0
         remainingSeconds -= 1
