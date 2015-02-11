@@ -23,16 +23,18 @@ describe "timer operation feature", :capybara do
 
   describe "Resume" do
     before do
-      timer = Timer.create!(start_time: 5.minutes.ago, end_time: nil)
-      timer.pauses.create!(start_time: 1.minutes.ago, end_time: nil)
+      timer = Timer.create!(start_time: 10.minutes.ago, end_time: nil)
+      timer.pauses.create!(start_time: 9.minutes.ago, end_time: nil)
     end
 
-    it "fills in end_time of pause" do
+    it "resumes the pause for the timer and subtract the duration" do
       visit '/timer'
       click_button('Resume')
 
       assert_equal 1, Timer.active.count
       assert_not_equal nil, Pause.last.end_time
+      # should have 25 - (10 - 9) = 24 minutes remaining
+      assert_match '24:00', find('div.timer-time').text
     end
   end
 

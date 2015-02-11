@@ -34,9 +34,7 @@ class TimerController < ApplicationController
   end
 
   def resume
-    timer.pauses.each do |pause|
-      pause.update!(end_time: DateTime.now)
-    end
+    timer.pauses.each { |pause| pause.complete }
     redirect_to timer_index_path
   end
 
