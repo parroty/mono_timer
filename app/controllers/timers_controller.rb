@@ -3,14 +3,21 @@ class TimersController < ApplicationController
     @timer = Timer.latest_timer
   end
 
-  def history
-    @timers = Timer.includes(:pauses).page(params[:page]).order("id desc")
-  end
-
   def create
     new_timer = Timer.create!(start_time: Time.zone.now)
     StopTimerService.create(new_timer)
     redirect_to timers_path
+  end
+
+  def show
+    respond_to do |format|
+      format.json { render json: timer.to_json(methods: :remaining_seconds) }
+      format.html { redirect_to timers_path }
+    end
+  end
+
+  def history
+    @timers = Timer.includes(:pauses).page(params[:page]).order("id desc")
   end
 
   def stop
