@@ -45,9 +45,12 @@ class Timer < ActiveRecord::Base
     start_time != nil && end_time == nil
   end
 
+  def passed
+    ((end_time || Time.zone.now) - start_time).to_i
+  end
+
   def remaining_seconds
     if not_completed?
-      passed    = ((end_time || Time.zone.now) - start_time).to_i
       paused    = pauses.reduce(0) { |acc, pause| acc + pause.duration }
       remaining = INITIAL_TIME - (passed - paused)
 

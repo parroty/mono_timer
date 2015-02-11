@@ -10,6 +10,7 @@
       <th>ID</th>
       <th>Start Time</th>
       <th>End Time</th>
+      <th>Duration</th>
       <th>Pauses</th>
       <th>Actions</th>
     </tr>
@@ -20,6 +21,7 @@
         <td><%= timer.id %></td>
         <td><%= to_display_time(timer.start_time) %></td>
         <td><%= to_display_time(timer.end_time) %></td>
+        <td><%= seconds_to_timer_str(timer.passed) %></td>
         <td>
           <% if timer.pauses.count > 0 %>
             <%= link_to timer.pauses.count, timer_pauses_path(timer) %>
