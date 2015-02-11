@@ -6,26 +6,26 @@
   </div>
 
   <%= button_to "Start",
-    { controller: 'timer', action: 'create' },
+    { controller: 'timers', action: 'create' },
       method: :post, class: 'btn btn-success btn-xl' %>
 
   <% if @timer.id %>
     <%= button_to "Stop",
-      { controller: 'timer', action: 'stop', id: @timer.id},
+      { controller: 'timers', action: 'stop', id: @timer.id},
         method: :post, class: 'btn btn-success btn-xl' %>
 
     <%= button_to "Pause",
-      { controller: 'timer', action: 'pause', id: @timer.id},
+      { controller: 'timers', action: 'pause', id: @timer.id},
         method: :post, class: 'btn btn-success btn-xl' %>
 
     <%= button_to "Resume",
-      { controller: 'timer', action: 'resume', id: @timer.id},
+      { controller: 'timers', action: 'resume', id: @timer.id},
         method: :post, class: 'btn btn-success btn-xl' %>
   <% end %>
 
   <div class='footer'>
     <div class="btn-group" role="group">
-      <%= link_to "History", { controller: 'timer', action: 'history'}, class: "btn btn-default" %>
+      <%= link_to "History", { controller: 'timers', action: 'history'}, class: "btn btn-default" %>
       <%= link_to 'Monitoring', sidekiq_web_path, class: "btn btn-default" %>
     </div>
   </div>

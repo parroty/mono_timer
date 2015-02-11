@@ -12,7 +12,7 @@ describe "timer operation feature", :capybara do
     end
 
     it "pauses timer returns not counting-down timer" do
-      visit '/timer'
+      visit '/timers'
       click_button('Pause')
 
       assert_equal 1, Pause.count
@@ -28,7 +28,7 @@ describe "timer operation feature", :capybara do
     end
 
     it "resumes the pause for the timer and subtract the duration" do
-      visit '/timer'
+      visit '/timers'
       click_button('Resume')
 
       assert_equal 1, Timer.active.count
@@ -40,11 +40,11 @@ describe "timer operation feature", :capybara do
 
   describe "Start" do
     it "creates timer and still shows the index page" do
-      visit '/timer'
+      visit '/timers'
       click_button('Start')
 
       assert_equal 1, Timer.active.count
-      assert_equal timer_index_path, current_path
+      assert_equal timers_path, current_path
     end
   end
 end

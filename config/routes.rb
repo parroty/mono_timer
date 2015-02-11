@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
-  root :to => redirect('/timer')
-  resources :timer, except: [:show]
-  get  "timer/history"
-  post "timer/:id/stop" => 'timer#stop', as: :timer_stop
-  post "timer/:id/pause" => 'timer#pause', as: :timer_pause
-  post "timer/:id/resume" => 'timer#resume', as: :timer_resume
-  get  "timer/:id/pauses" => 'timer#pauses', as: :timer_pauses
+  root :to => redirect('/timers')
+
+  resources :timers, only: [:index, :create, :destroy]
+  get  "timers/history"
+  post "timers/:id/stop"   => 'timers#stop', as: :timer_stop
+  post "timers/:id/pause"  => 'timers#pause', as: :timer_pause
+  post "timers/:id/resume" => 'timers#resume', as: :timer_resume
+  get  "timers/:id/pauses" => 'pauses#index', as: :timer_pauses
 
   require 'sidekiq/web'
 

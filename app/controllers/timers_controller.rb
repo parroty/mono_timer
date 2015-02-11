@@ -1,10 +1,6 @@
-class TimerController < ApplicationController
+class TimersController < ApplicationController
   def index
     @timer = Timer.latest_timer
-  end
-
-  def new
-    @timer = Timer.new
   end
 
   def history
@@ -14,34 +10,29 @@ class TimerController < ApplicationController
   def create
     new_timer = Timer.create!(start_time: Time.zone.now)
     StopTimerService.create(new_timer.id)
-    redirect_to timer_index_path
-  end
-
-  def destroy
-    timer.destroy!
-    redirect_to timer_history_path
+    redirect_to timers_path
   end
 
   def stop
     Timer.stop_timer!(params[:id])
     StopTimerService.destroy(params[:id])
-    redirect_to timer_index_path
+    redirect_to timers_path
   end
 
   def pause
     timer.pauses.create!(start_time: Time.zone.now)
-    redirect_to timer_index_path
+    redirect_to timers_path
   end
 
   def resume
     timer.pauses.each { |pause| pause.complete }
-    redirect_to timer_index_path
+    redirect_to timers_path
   end
 
-  def pauses
-    @timer = timer
+  def destroy
+    timer.destroy!
+    redirect_to timers_history_path
   end
-
 private
   def timer
     Timer.find(params[:id])

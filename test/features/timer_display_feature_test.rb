@@ -7,19 +7,14 @@ describe "timer display feature", :capybara do
     end
 
     it "displays 1500 seconds (25:00)" do
-      visit '/timer'
+      visit '/timers'
       assert_content "25:00"
       assert_match js_for_remaining_time(1500), page.body
     end
 
     it "shows timer history page" do
-      visit '/timer/history'
+      visit '/timers/history'
       assert_content page, "Timer History"
-    end
-
-    it "shows new timer page" do
-      visit '/timer/new'
-      assert_content page, "New Timer"
     end
   end
 
@@ -34,7 +29,7 @@ describe "timer display feature", :capybara do
     end
 
     it "shows remaining time for 900 seconds (25:00 - 10:00 -> 15:00)" do
-      visit '/timer'
+      visit '/timers'
       assert_content "15:00"
       assert_match js_for_remaining_time(900), page.body
     end
