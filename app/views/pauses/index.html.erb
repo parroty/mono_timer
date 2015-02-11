@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @timer.pauses.each do |pause| %>
+    <% @pauses.each do |pause| %>
       <tr>
         <td><%= pause.id %></td>
         <td><%= to_display_time(pause.start_time) %></td>
@@ -24,3 +24,6 @@
     <% end %>
   </tbody>
 </table>
+
+<div><%= paginate(@pauses) %></div>
+<div><%= page_entries_info(@pauses) %></div>
