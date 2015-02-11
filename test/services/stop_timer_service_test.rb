@@ -7,9 +7,9 @@ describe StopTimerService do
 
   describe "create" do
     it "invokes StopTimerWorker#perform_in with correct parameters" do
-      StopTimerWorker.expects(:perform_in).with(25 * 60, @timer.id, true)
+      StopTimerWorker.expects(:perform_in).with(20 * 60, @timer.id, true)
 
-      StopTimerService.create(@timer.id)
+      StopTimerService.create(@timer)
     end
   end
 
@@ -19,7 +19,7 @@ describe StopTimerService do
       entry.expects(:delete)
       Sidekiq::ScheduledSet.expects(:new).returns([entry])
 
-      StopTimerService.destroy(@timer.id)
+      StopTimerService.destroy(@timer)
     end
   end
 end

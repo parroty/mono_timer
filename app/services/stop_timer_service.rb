@@ -1,11 +1,11 @@
 class StopTimerService
-  def self.create(timer_id)
-    StopTimerWorker.perform_in(Timer::INITIAL_TIME, timer_id, true)
+  def self.create(timer)
+    StopTimerWorker.perform_in(timer.remaining_seconds, timer.id, true)
   end
 
-  def self.destroy(timer_id)
+  def self.destroy(timer)
     Sidekiq::ScheduledSet.new.each do |entry|
-      entry.delete if fetch_timer_id(entry) == timer_id.to_i
+      entry.delete if fetch_timer_id(entry) == timer.id
     end
   end
 

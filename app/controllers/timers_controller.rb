@@ -9,23 +9,25 @@ class TimersController < ApplicationController
 
   def create
     new_timer = Timer.create!(start_time: Time.zone.now)
-    StopTimerService.create(new_timer.id)
+    StopTimerService.create(new_timer)
     redirect_to timers_path
   end
 
   def stop
-    Timer.stop_timer!(params[:id])
-    StopTimerService.destroy(params[:id])
+    Timer.stop_timer!(timer)
+    StopTimerService.destroy(timer)
     redirect_to timers_path
   end
 
   def pause
     timer.pauses.create!(start_time: Time.zone.now)
+    StopTimerService.destroy(timer)
     redirect_to timers_path
   end
 
   def resume
     timer.pauses.each { |pause| pause.complete }
+    StopTimerService.create(timer)
     redirect_to timers_path
   end
 
@@ -35,6 +37,6 @@ class TimersController < ApplicationController
   end
 private
   def timer
-    Timer.find(params[:id])
+    @timer ||= Timer.find(params[:id])
   end
 end

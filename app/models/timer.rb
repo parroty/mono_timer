@@ -10,8 +10,7 @@ class Timer < ActiveRecord::Base
     Timer.order("id desc").first || Timer.new(start_time: nil)
   end
 
-  def self.stop_timer!(id)
-    timer = Timer.find(id)
+  def self.stop_timer!(timer)
     timer.stop!
   end
 
