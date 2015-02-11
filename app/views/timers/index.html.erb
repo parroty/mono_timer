@@ -8,13 +8,13 @@
   <% if @timer.status == Timer::Status::INITIAL %>
     <%= button_to "Start",
       { controller: 'timers', action: 'create' },
-        method: :post, class: 'btn btn-success btn-xl' %>
+        method: :post, class: 'btn btn-primary btn-xl' %>
   <% else %>
     <% if @timer.id %>
       <% if @timer.status == Timer::Status::PAUSED %>
         <%= button_to "Stop",
           { controller: 'timers', action: 'stop', id: @timer.id},
-            method: :post, class: 'btn btn-success btn-xl' %>
+            method: :post, class: 'btn btn-danger btn-xl' %>
 
         <%= button_to "Resume",
           { controller: 'timers', action: 'resume', id: @timer.id},
@@ -24,7 +24,7 @@
       <% if @timer.status == Timer::Status::RUNNING %>
         <%= button_to "Pause",
           { controller: 'timers', action: 'pause', id: @timer.id},
-            method: :post, class: 'btn btn-success btn-xl' %>
+            method: :post, class: 'btn btn-info btn-xl' %>
       <% end %>
     <% end %>
   <% end %>
