@@ -32,20 +32,11 @@ describe Timer do
 
       assert_equal false, timer.reload.counting_down?
     end
-  end
-
-  describe "Timer.stop_timer" do
-    it "stops active timer" do
-      timer = Timer.create(start_time: 5.minutes.ago, end_time: nil)
-      Timer.stop_timer!(timer)
-
-      assert_equal false, timer.reload.counting_down?
-    end
 
     it "does not change the end_time of already stopped timer" do
       original_end_time = 5.minutes.ago
       timer = Timer.create(start_time: 30.minutes.ago, end_time: original_end_time)
-      Timer.stop_timer!(timer)
+      timer.stop!
 
       assert_equal original_end_time, timer.end_time
     end

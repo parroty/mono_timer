@@ -10,20 +10,39 @@ class Timer < ActiveRecord::Base
     Timer.order("id desc").first || Timer.new(start_time: nil)
   end
 
-  def self.stop_timer!(timer)
-    timer.stop!
-  end
-
   def self.completed_counts_at(date_or_time)
     Timer.where("DATE(end_time) = ?", date_or_time.to_date).count
   end
 
   def stop!
-    update!(end_time: Time.zone.now) if counting_down?
+    if not_completed?
+      update!(end_time: Time.zone.now)
+      complete_pauses
+    end
+  end
+
+  def pause
+    pauses.create!(start_time: Time.zone.now)
+  end
+
+  def resume
+    complete_pauses
+  end
+
+  def complete_pauses
+    pauses.each { |pause| pause.complete }
   end
 
   def counting_down?
-    not_completed? && has_active_pause? == false
+    not_completed? && paused? == false
+  end
+
+  def paused?
+    end_time == nil && pauses.any? { |pause| pause.active? }
+  end
+
+  def not_completed?
+    start_time != nil && end_time == nil
   end
 
   def remaining_seconds
@@ -36,13 +55,5 @@ class Timer < ActiveRecord::Base
     else
       INITIAL_TIME
     end
-  end
-private
-  def not_completed?
-    start_time != nil && end_time == nil
-  end
-
-  def has_active_pause?
-    pauses.any? { |pause| pause.active? }
   end
 end

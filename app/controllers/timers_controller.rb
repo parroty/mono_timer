@@ -21,19 +21,19 @@ class TimersController < ApplicationController
   end
 
   def stop
-    Timer.stop_timer!(timer)
+    timer.stop!
     StopTimerService.destroy(timer)
     redirect_to timers_path
   end
 
   def pause
-    timer.pauses.create!(start_time: Time.zone.now)
+    timer.pause
     StopTimerService.destroy(timer)
     redirect_to timers_path
   end
 
   def resume
-    timer.pauses.each { |pause| pause.complete }
+    timer.resume
     StopTimerService.create(timer)
     redirect_to timers_path
   end

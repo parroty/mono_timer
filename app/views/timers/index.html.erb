@@ -5,22 +5,26 @@
     <%= seconds_to_timer_str(@timer.remaining_seconds) %>
   </div>
 
-  <%= button_to "Start",
-    { controller: 'timers', action: 'create' },
-      method: :post, class: 'btn btn-success btn-xl' %>
-
-  <% if @timer.id %>
-    <%= button_to "Stop",
-      { controller: 'timers', action: 'stop', id: @timer.id},
+  <% if @timer.not_completed? == false %>
+    <%= button_to "Start",
+      { controller: 'timers', action: 'create' },
         method: :post, class: 'btn btn-success btn-xl' %>
+  <% else %>
+    <% if @timer.id %>
+      <% if @timer.paused? %>
+        <%= button_to "Stop",
+          { controller: 'timers', action: 'stop', id: @timer.id},
+            method: :post, class: 'btn btn-success btn-xl' %>
 
-    <%= button_to "Pause",
-      { controller: 'timers', action: 'pause', id: @timer.id},
-        method: :post, class: 'btn btn-success btn-xl' %>
-
-    <%= button_to "Resume",
-      { controller: 'timers', action: 'resume', id: @timer.id},
-        method: :post, class: 'btn btn-success btn-xl' %>
+        <%= button_to "Resume",
+          { controller: 'timers', action: 'resume', id: @timer.id},
+            method: :post, class: 'btn btn-success btn-xl' %>
+      <% else %>
+        <%= button_to "Pause",
+          { controller: 'timers', action: 'pause', id: @timer.id},
+            method: :post, class: 'btn btn-success btn-xl' %>
+      <% end %>
+    <% end %>
   <% end %>
 
   <div class='footer'>
