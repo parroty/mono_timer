@@ -1,6 +1,6 @@
 require "test_helper"
 
-describe "timer", :capybara do
+describe "timer display feature", :capybara do
   describe "when there's no timer" do
     before do
       Timer.all.delete_all
@@ -10,16 +10,6 @@ describe "timer", :capybara do
       visit '/timer'
       assert_content "25:00"
       assert_match "1500", page.body
-    end
-
-    it "creates timer and still shows the index page" do
-      timer_count = Timer.count
-
-      visit '/timer'
-      click_button('Start')
-
-      assert_equal timer_count + 1, Timer.count
-      assert_equal timer_index_path, current_path
     end
 
     it "shows timer history page" do

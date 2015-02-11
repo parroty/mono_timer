@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150131135702) do
+ActiveRecord::Schema.define(version: 20150211023001) do
+
+  create_table "pauses", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "timer_id"
+  end
+
+  add_index "pauses", ["timer_id"], name: "index_pauses_on_timer_id"
 
   create_table "timers", force: :cascade do |t|
     t.datetime "start_time"

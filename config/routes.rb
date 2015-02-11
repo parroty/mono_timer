@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :timer, except: [:show]
   get "timer/history"
   post "timer/:id/stop" => 'timer#stop', as: :timer_stop
+  post "timer/:id/pause" => 'timer#pause', as: :timer_pause
+  post "timer/:id/resume" => 'timer#resume', as: :timer_resume
 
   require 'sidekiq/web'
 

@@ -9,9 +9,19 @@
     { controller: 'timer', action: 'create' },
       method: :post, class: 'btn btn-success btn-xl' %>
 
-  <%= button_to "Stop", "#",
-    onclick: "stopTimer(" + @timer.id.to_s + "); return false;",
-    class: 'btn btn-primary btn-xl' %>
+  <% if @timer.id %>
+    <%= button_to "Stop", "#",
+      onclick: "stopTimer(" + @timer.id.to_s + "); return false;",
+      class: 'btn btn-primary btn-xl' %>
+
+    <%= button_to "Pause",
+      { controller: 'timer', action: 'pause', id: @timer.id},
+        method: :post, class: 'btn btn-success btn-xl' %>
+
+    <%= button_to "Resume",
+      { controller: 'timer', action: 'resume', id: @timer.id},
+        method: :post, class: 'btn btn-success btn-xl' %>
+  <% end %>
 
   <div class='footer'>
     <div class="btn-group" role="group">
