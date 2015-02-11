@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe TimerController do
   before do
-    @timer = Timer.create!(start_time: DateTime.now, category: "Programming")
+    @timer = Timer.create!(start_time: Time.zone.now, category: "Programming")
   end
 
   it "gets index" do

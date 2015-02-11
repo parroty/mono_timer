@@ -12,7 +12,7 @@ class TimerController < ApplicationController
   end
 
   def create
-    new_timer = Timer.create!(start_time: DateTime.now)
+    new_timer = Timer.create!(start_time: Time.zone.now)
     StopTimerService.create(new_timer.id)
     redirect_to timer_index_path
   end
@@ -29,7 +29,7 @@ class TimerController < ApplicationController
   end
 
   def pause
-    timer.pauses.create!(start_time: DateTime.now)
+    timer.pauses.create!(start_time: Time.zone.now)
     redirect_to timer_index_path
   end
 

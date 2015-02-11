@@ -6,7 +6,7 @@ class Pause < ActiveRecord::Base
   end
 
   def complete
-    update!(end_time: DateTime.now) unless end_time
+    update!(end_time: Time.zone.now) unless end_time
   end
 
   def duration

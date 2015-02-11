@@ -20,7 +20,7 @@ class Timer < ActiveRecord::Base
   end
 
   def stop!
-    update!(end_time: DateTime.now) if counting_down?
+    update!(end_time: Time.zone.now) if counting_down?
   end
 
   def counting_down?
