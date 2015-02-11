@@ -10,7 +10,7 @@
       <th>ID</th>
       <th>Start Time</th>
       <th>End Time</th>
-      <th>Seconds</th>
+      <th>Duration</th>
     </tr>
   </thead>
   <tbody>
@@ -19,7 +19,7 @@
         <td><%= pause.id %></td>
         <td><%= to_display_time(pause.start_time) %></td>
         <td><%= to_display_time(pause.end_time) %></td>
-        <td><%= pause.duration %></td>
+        <td><%= seconds_to_timer_str(pause.duration) %></td>
       </tr>
     <% end %>
   </tbody>

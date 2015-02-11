@@ -1,13 +1,21 @@
 class Timer < ActiveRecord::Base
   INITIAL_TIME = 25 * 60
+
+  module Status
+    INITIAL   = 1
+    RUNNING   = 2
+    PAUSED    = 3
+    COMPLETED = 4
+  end
+
   paginates_per 50
 
   has_many :pauses, dependent: :destroy
 
   scope :active, -> { where("end_time is NULL") }
 
-  def self.latest_timer
-    Timer.order("id desc").first || Timer.new(start_time: nil)
+  def self.latest_active_timer
+    Timer.active.order("id desc").first
   end
 
   def self.completed_counts_at(date_or_time)
@@ -15,9 +23,9 @@ class Timer < ActiveRecord::Base
   end
 
   def stop!
-    if not_completed?
+    if end_time == nil
       update!(end_time: Time.zone.now)
-      complete_pauses
+      finish_pauses
     end
   end
 
@@ -26,37 +34,58 @@ class Timer < ActiveRecord::Base
   end
 
   def resume
-    complete_pauses
+    finish_pauses
   end
 
-  def complete_pauses
-    pauses.each { |pause| pause.complete }
+  def status
+    if start_time == nil
+      Status::INITIAL
+    else
+      if end_time != nil
+        Status::COMPLETED
+      else
+        if paused?
+          Status::PAUSED
+        else
+          Status::RUNNING
+        end
+      end
+    end
   end
 
-  def counting_down?
-    not_completed? && paused? == false
-  end
-
-  def paused?
-    end_time == nil && pauses.any? { |pause| pause.active? }
-  end
-
-  def not_completed?
-    start_time != nil && end_time == nil
-  end
-
-  def passed
+  def passed_seconds
     ((end_time || Time.zone.now) - start_time).to_i
   end
 
   def remaining_seconds
-    if not_completed?
-      paused    = pauses.reduce(0) { |acc, pause| acc + pause.duration }
-      remaining = INITIAL_TIME - (passed - paused)
-
-      [remaining, 0].max
-    else
+    case status
+    when Status::INITIAL then
       INITIAL_TIME
+    when Status::RUNNING then
+      calculate_remaining_seconds
+    when Status::PAUSED then
+      calculate_remaining_seconds
+    when Status::COMPLETED then
+      0
+    else
+      raise "Invalid status value: #{status}"
     end
+  end
+
+private
+
+  def calculate_remaining_seconds
+    paused    = pauses.reduce(0) { |acc, pause| acc + pause.duration }
+    remaining = INITIAL_TIME - (passed_seconds - paused)
+
+    [remaining, 0].max
+  end
+
+  def finish_pauses
+    pauses.each { |pause| pause.complete }
+  end
+
+  def paused?
+    pauses.any? { |pause| pause.active? }
   end
 end

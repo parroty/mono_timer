@@ -5,13 +5,13 @@
     <%= seconds_to_timer_str(@timer.remaining_seconds) %>
   </div>
 
-  <% if @timer.not_completed? == false %>
+  <% if @timer.status == Timer::Status::INITIAL %>
     <%= button_to "Start",
       { controller: 'timers', action: 'create' },
         method: :post, class: 'btn btn-success btn-xl' %>
   <% else %>
     <% if @timer.id %>
-      <% if @timer.paused? %>
+      <% if @timer.status == Timer::Status::PAUSED %>
         <%= button_to "Stop",
           { controller: 'timers', action: 'stop', id: @timer.id},
             method: :post, class: 'btn btn-success btn-xl' %>
@@ -19,7 +19,9 @@
         <%= button_to "Resume",
           { controller: 'timers', action: 'resume', id: @timer.id},
             method: :post, class: 'btn btn-success btn-xl' %>
-      <% else %>
+      <% end %>
+
+      <% if @timer.status == Timer::Status::RUNNING %>
         <%= button_to "Pause",
           { controller: 'timers', action: 'pause', id: @timer.id},
             method: :post, class: 'btn btn-success btn-xl' %>
@@ -36,7 +38,7 @@
 
   <%= javascript_tag do %>
     window.remainingSeconds = '<%= @timer.remaining_seconds %>';
-    window.isCountingDown   = '<%= @timer.counting_down? %>';
+    window.isCountingDown   = '<%= @timer.status == Timer::Status::RUNNING %>';
     window.timerId          = '<%= @timer.id %>';
   <% end %>
 </div>

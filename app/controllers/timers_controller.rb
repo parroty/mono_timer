@@ -1,6 +1,6 @@
 class TimersController < ApplicationController
   def index
-    @timer = Timer.latest_timer
+    @timer = Timer.latest_active_timer || Timer.new
   end
 
   def create
