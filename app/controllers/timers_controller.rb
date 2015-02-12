@@ -4,7 +4,7 @@ class TimersController < ApplicationController
   end
 
   def create
-    new_timer = Timer.create!(start_time: Time.zone.now)
+    new_timer = Timer.create(start_time: Time.zone.now)
     StopTimerService.create(new_timer)
     redirect_to timers_path
   end

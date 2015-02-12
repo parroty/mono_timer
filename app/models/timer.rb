@@ -1,3 +1,5 @@
+require "#{Rails.root}/app/validators/time_overwrap_validator"
+
 class Timer < ActiveRecord::Base
   INITIAL_TIME = 25 * 60
 
@@ -11,6 +13,8 @@ class Timer < ActiveRecord::Base
   paginates_per 50
 
   has_many :pauses, dependent: :destroy
+
+  validates_with ::TimeOverlapValidator
 
   def self.current_timer
     timer = Timer.order("id desc").first

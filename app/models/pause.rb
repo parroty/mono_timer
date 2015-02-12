@@ -1,5 +1,9 @@
+require "#{Rails.root}/app/validators/time_overwrap_validator"
+
 class Pause < ActiveRecord::Base
   belongs_to :timer, counter_cache: true
+
+  validates_with ::TimeOverlapValidator
 
   def active?
     end_time == nil

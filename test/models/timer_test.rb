@@ -1,6 +1,18 @@
 require 'test_helper'
 
 describe Timer do
+  describe "validation" do
+    it "has a error on creating a end_time < start_time timer" do
+      timer = Timer.create(start_time: 5.minutes.ago, end_time: 30.minutes.ago)
+      assert_equal 1, timer.errors.size
+    end
+
+    it "doesn't have error on creating a start_time < end_time timer" do
+      timer = Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
+      assert_equal 0, timer.errors.size
+    end
+  end
+
   describe "status" do
     describe "with no pause" do
       it "returns INITIAL status for timer with no start_time" do
@@ -101,7 +113,7 @@ describe Timer do
     end
 
     it "returns 1 if there's one completed timer" do
-      timer = Timer.create(start_time: 30.minutes.ago, end_time: @today)
+      timer = Timer.create(start_time: @today - 30.minutes, end_time: @today)
       assert_equal 1, Timer.completed_counts_at(@today)
     end
   end
