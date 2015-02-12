@@ -1,6 +1,6 @@
 class TimersController < ApplicationController
   def index
-    @timer = Timer.latest_active_timer || Timer.new
+    @timer = Timer.current_timer
   end
 
   def create
@@ -42,6 +42,7 @@ class TimersController < ApplicationController
     timer.destroy!
     redirect_to timers_history_path
   end
+
 private
   def timer
     @timer ||= Timer.find(params[:id])

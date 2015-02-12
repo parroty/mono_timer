@@ -31,7 +31,7 @@ describe "timer operation feature", :capybara do
       visit '/timers'
       click_button('Resume')
 
-      assert_equal 1, Timer.active.count
+      assert_equal Timer::Status::RUNNING, Timer.current_timer.status
       assert_not_equal nil, Pause.last.end_time
       # should have 25 - (10 - 9) = 24 minutes remaining
       assert_match '24:00', find('div.timer-time').text
@@ -43,7 +43,7 @@ describe "timer operation feature", :capybara do
       visit '/timers'
       click_button('Start')
 
-      assert_equal 1, Timer.active.count
+      assert_equal Timer::Status::RUNNING, Timer.current_timer.status
       assert_equal timers_path, current_path
     end
   end

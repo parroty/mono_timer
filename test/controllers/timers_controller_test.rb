@@ -24,17 +24,25 @@ describe TimersController do
     assert_redirected_to timers_path
   end
 
+  it "stops timer and gets redirected to index page" do
+    post :stop, id: @timer.id
+    assert_redirected_to timers_path
+  end
+
+  it "resumes timer and gets redirected to index page" do
+    post :resume, id: @timer.id
+    assert_redirected_to timers_path
+  end
+
+  it "pauses timer and gets redirected to index page" do
+    post :pause, id: @timer.id
+    assert_redirected_to timers_path
+  end
+
   it "deletes timer and gets redirected to history page" do
     assert_difference 'Timer.count', -1, "A Timer should be destroyed" do
       delete :destroy, id: @timer.id
     end
     assert_redirected_to timers_history_path
-  end
-
-  it "stops timer and gets redirected to index page" do
-    assert_difference 'Timer.active.count', -1, "An active timer should be removed" do
-      post :stop, id: @timer.id
-    end
-    assert_redirected_to timers_path
   end
 end

@@ -12,10 +12,13 @@ class Timer < ActiveRecord::Base
 
   has_many :pauses, dependent: :destroy
 
-  scope :active, -> { where("end_time is NULL") }
-
-  def self.latest_active_timer
-    Timer.active.order("id desc").first
+  def self.current_timer
+    timer = Timer.order("id desc").first
+    if timer == nil || timer.status == Status::COMPLETED
+      Timer.new
+    else
+      timer
+    end
   end
 
   def self.completed_counts_at(date_or_time)

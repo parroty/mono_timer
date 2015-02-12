@@ -66,35 +66,27 @@ describe Timer do
     end
   end
 
-  describe "Timer.active" do
+  describe "current_timer" do
     before do
       Timer.all.delete_all
     end
 
-    it "returns active timer only" do
+    it "returns active timer" do
+      timer = Timer.create(start_time: 5.minutes.ago, end_time: nil)
+
+      assert_equal Timer::Status::RUNNING, timer.status
+    end
+
+    it "returns new timer if latest timer is completed" do
       timer_inactive = Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
-      timer_active   = Timer.create(start_time: 5.minutes.ago, end_time: nil)
+      timer = Timer.current_timer
 
-      assert_equal [timer_active], Timer.active
-    end
-  end
-
-  describe "Timer.latest_active_timer" do
-    before do
-      Timer.all.delete_all
+      assert_equal Timer::Status::INITIAL, timer.status
     end
 
-    it "returns active timer by skipping newer inactive timer" do
-      timer_inactive = Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
-      timer_active   = Timer.create(start_time: 5.minutes.ago, end_time: nil)
-      timer = Timer.latest_active_timer
-
-      assert_equal timer_active, timer
-    end
-
-    it "returns nil if there's no timer" do
-      timer = Timer.latest_active_timer
-      assert_equal nil, timer
+    it "returns new timer if there's no timer" do
+      timer = Timer.current_timer
+      assert_equal Timer::Status::INITIAL, timer.status
     end
   end
 
