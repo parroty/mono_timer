@@ -8,10 +8,10 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Start Time</th>
-      <th>End Time</th>
-      <th>Duration</th>
-      <th>Pauses</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Time</th>
+      <th>Pause</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -30,7 +30,7 @@
           <% end %>
           </td>
         <td>
-          <%= button_to 'Destroy', timer_path(timer), :method => :delete, :class => 'btn btn-mini btn-danger' %>
+          <%= button_to 'Destroy', timer_path(timer), :method => :delete, :class => 'btn btn-xs btn-danger' %>
         </td.
       </tr>
     <% end %>
