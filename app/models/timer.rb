@@ -25,6 +25,10 @@ class Timer < ActiveRecord::Base
     end
   end
 
+  def active?
+    [Status::RUNNING, Status::PAUSED].include?(status)
+  end
+
   def self.completed_counts_at(date_or_time)
     Timer.where("DATE(end_time) = ?", date_or_time.to_date).count
   end

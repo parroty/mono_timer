@@ -4,9 +4,13 @@ class TimersController < ApplicationController
   end
 
   def create
-    new_timer = Timer.create(start_time: Time.zone.now)
-    StopTimerService.create(new_timer)
-    redirect_to timers_path
+    if Timer.current_timer.active?
+      redirect_to timers_path, flash: { error: "Cannot create a new timer before completing the previous one." }
+    else
+      new_timer = Timer.create(start_time: Time.zone.now)
+      StopTimerService.create(new_timer)
+      redirect_to timers_path
+    end
   end
 
   def show

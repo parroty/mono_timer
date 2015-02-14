@@ -2,8 +2,7 @@ require 'test_helper'
 
 describe TimersController do
   before do
-    Timer.all.delete_all
-    @timer = Timer.create!(start_time: Time.zone.now, category: "Programming")
+    @timer = Timer.create!(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
   end
 
   it "gets index" do
