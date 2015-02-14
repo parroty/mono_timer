@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 describe StopTimerWorker do
   before do
@@ -24,7 +24,7 @@ describe StopTimerWorker do
       refute_nil @timer.reload.end_time
     end
 
-    it "stops timer and send notification with send_notification = true option" do
+    it "stops timer and send notification with option = true" do
       PushoverNotifier.any_instance.expects(:notify).with do |param|
         param =~ /timer of today completed/
       end

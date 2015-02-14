@@ -6,7 +6,7 @@ describe "pause display feature", :capybara do
     @pause = @timer.pauses.create!(start_time: 5.minutes.ago, end_time: nil)
   end
 
-  it 'shows the list of pauses for the specified timer' do
+  it "shows the list of pauses for the specified timer" do
     visit "/timers/#{@timer.id}/pauses"
 
     assert page.has_content?(@timer.id)

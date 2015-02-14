@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 describe PushoverNotifier do
   describe "when succeeds" do

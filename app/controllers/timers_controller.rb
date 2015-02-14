@@ -5,7 +5,8 @@ class TimersController < ApplicationController
 
   def create
     if Timer.current_timer.active?
-      redirect_to timers_path, flash: { error: "Cannot create a new timer before completing the previous one." }
+      message = "Cannot create a new timer before completing the previous one."
+      redirect_to timers_path, flash: { error: message }
     else
       new_timer = Timer.create(start_time: Time.zone.now)
       StopTimerService.create(new_timer)
@@ -47,7 +48,8 @@ class TimersController < ApplicationController
     redirect_to timers_history_path
   end
 
-private
+  private
+
   def timer
     @timer ||= Timer.find(params[:id])
   end

@@ -18,7 +18,7 @@ class Timer < ActiveRecord::Base
 
   def self.current_timer
     timer = Timer.order("id desc").first
-    if timer == nil || timer.status == Status::COMPLETED
+    if timer.nil? || timer.status == Status::COMPLETED
       Timer.new
     else
       timer
@@ -34,10 +34,10 @@ class Timer < ActiveRecord::Base
   end
 
   def stop!
-    if end_time == nil
-      update!(end_time: Time.zone.now)
-      finish_pauses
-    end
+    return unless end_time.nil?
+
+    update!(end_time: Time.zone.now)
+    finish_pauses
   end
 
   def pause
@@ -49,17 +49,13 @@ class Timer < ActiveRecord::Base
   end
 
   def status
-    if start_time == nil
+    if start_time.nil?
       Status::INITIAL
     else
-      if end_time != nil
+      if !end_time.nil?
         Status::COMPLETED
       else
-        if paused?
-          Status::PAUSED
-        else
-          Status::RUNNING
-        end
+        paused? ? Status::PAUSED : Status::RUNNING
       end
     end
   end
@@ -70,33 +66,28 @@ class Timer < ActiveRecord::Base
 
   def remaining_seconds
     case status
-    when Status::INITIAL then
-      INITIAL_TIME
-    when Status::RUNNING then
-      calculate_remaining_seconds
-    when Status::PAUSED then
-      calculate_remaining_seconds
-    when Status::COMPLETED then
-      0
-    else
-      raise "Invalid status value: #{status}"
+    when Status::INITIAL   then INITIAL_TIME
+    when Status::RUNNING   then calculate_remaining_seconds
+    when Status::PAUSED    then calculate_remaining_seconds
+    when Status::COMPLETED then 0
+    else fail "Invalid status value: #{status}"
     end
   end
 
-private
+  private
 
   def calculate_remaining_seconds
-    paused    = pauses.reduce(0) { |acc, pause| acc + pause.duration }
+    paused    = pauses.reduce(0) { |a, e| a + e.duration }
     remaining = INITIAL_TIME - (passed_seconds - paused)
 
     [remaining, 0].max
   end
 
   def finish_pauses
-    pauses.each { |pause| pause.complete }
+    pauses.each(&:complete)
   end
 
   def paused?
-    pauses.any? { |pause| pause.active? }
+    pauses.any?(&:active?)
   end
 end

@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 describe Timer do
   describe "validation" do
@@ -26,7 +26,8 @@ describe Timer do
       end
 
       it "returns COMPLETED status for timer with end_time" do
-        timer = Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
+        timer =
+          Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
         assert_equal Timer::Status::COMPLETED, timer.status
       end
     end
@@ -34,14 +35,15 @@ describe Timer do
     describe "with pause" do
       it "returns PAUSED status for timer with active pause" do
         timer = Timer.create(start_time: 10.minutes.ago, end_time: nil)
-        pause = timer.pauses.create!(start_time: 5.minutes.ago, end_time: nil)
+        timer.pauses.create!(start_time: 5.minutes.ago, end_time: nil)
 
         assert_equal Timer::Status::PAUSED, timer.status
       end
 
       it "returns RUNNING status for timer with non-active pause" do
         timer = Timer.create(start_time: 10.minutes.ago, end_time: nil)
-        pause = timer.pauses.create!(start_time: 5.minutes.ago, end_time: 3.minutes.ago)
+        timer.pauses.create!(
+          start_time: 5.minutes.ago, end_time: 3.minutes.ago)
 
         assert_equal Timer::Status::RUNNING, timer.status
       end
@@ -51,7 +53,8 @@ describe Timer do
   describe "remaining_seconds" do
     it "returns remaining time for active timer within 25:00" do
       timer = Timer.create(start_time: 10.minutes.ago)
-      assert_equal (25 - 10) * 60, timer.remaining_seconds
+      expected_seconds = (25 - 10) * 60
+      assert_equal expected_seconds, timer.remaining_seconds
     end
 
     it "returns 0 remaining time for active timer before 25:00 ago" do
@@ -70,7 +73,8 @@ describe Timer do
 
     it "does not its status and end_time of already stopped timer" do
       original_end_time = 5.minutes.ago
-      timer = Timer.create(start_time: 30.minutes.ago, end_time: original_end_time)
+      timer = Timer.create(
+        start_time: 30.minutes.ago, end_time: original_end_time)
       timer.stop!
 
       assert_equal original_end_time, timer.end_time
@@ -90,7 +94,7 @@ describe Timer do
     end
 
     it "returns new timer if latest timer is completed" do
-      timer_inactive = Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
+      Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
       timer = Timer.current_timer
 
       assert_equal Timer::Status::INITIAL, timer.status
@@ -108,12 +112,12 @@ describe Timer do
     end
 
     it "returns 0 if there's no completed timer" do
-      timer = Timer.create(start_time: 30.minutes.ago, end_time: nil)
+      Timer.create(start_time: 30.minutes.ago, end_time: nil)
       assert_equal 0, Timer.completed_counts_at(@today)
     end
 
     it "returns 1 if there's one completed timer" do
-      timer = Timer.create(start_time: @today - 30.minutes, end_time: @today)
+      Timer.create(start_time: @today - 30.minutes, end_time: @today)
       assert_equal 1, Timer.completed_counts_at(@today)
     end
   end

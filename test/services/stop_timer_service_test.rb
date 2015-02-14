@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 describe StopTimerService do
   before do
@@ -14,8 +14,8 @@ describe StopTimerService do
   end
 
   describe "destroy" do
-    it "invokes delete for the corresponding entry in the Sidekiq::ScheduledSet" do
-      entry = stub(item: {"args" => [@timer.id]})
+    it "invokes delete for the entry in the Sidekiq::ScheduledSet" do
+      entry = stub(item: { "args" => [@timer.id] })
       entry.expects(:delete)
       Sidekiq::ScheduledSet.expects(:new).returns([entry])
 

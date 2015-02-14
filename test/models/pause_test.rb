@@ -15,9 +15,15 @@ describe Pause do
 
   describe "methods" do
     before do
-      @timer = Timer.create(start_time: 10.minutes.ago, end_time: nil)
-      @active_pause   = @timer.pauses.create!(start_time: 5.minutes.ago, end_time: nil)
-      @inactive_pause = @timer.pauses.create!(start_time: 5.minutes.ago, end_time: 3.minutes.ago)
+      @timer =
+        Timer.create(
+          start_time: 10.minutes.ago, end_time: nil)
+      @active_pause =
+        @timer.pauses.create!(
+          start_time: 5.minutes.ago, end_time: nil)
+      @inactive_pause =
+        @timer.pauses.create!(
+          start_time: 5.minutes.ago, end_time: 3.minutes.ago)
     end
 
     describe "active?" do

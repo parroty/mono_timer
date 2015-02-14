@@ -1,0 +1,19 @@
+AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - !ruby/regexp /old_and_unused\.rb$/
+    - 'bin/**/*'
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+GuardClause:
+  MinBodyLength: 4
+
+Documentation:
+  Enabled: false

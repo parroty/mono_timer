@@ -6,7 +6,7 @@ class Pause < ActiveRecord::Base
   validates_with ::TimeOverlapValidator
 
   def active?
-    end_time == nil
+    end_time.nil?
   end
 
   def complete
