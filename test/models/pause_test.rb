@@ -2,12 +2,17 @@ require "test_helper"
 
 describe Pause do
   describe "validation" do
-    it "has a error on creating a end_time < start_time pause" do
+    it "shows an error on creating a end_time < start_time pause" do
       pause = Pause.create(start_time: 5.minutes.ago, end_time: 30.minutes.ago)
       assert_equal 1, pause.errors.size
     end
 
-    it "doesn't have error on creating a start_time < end_time pause" do
+    it "shows an error on creating a end_time with nil_start_time timer" do
+      timer = Timer.create(start_time: nil, end_time: 30.minutes.ago)
+      assert_equal 1, timer.errors.size
+    end
+
+    it "doesn't show an error on creating a start_time < end_time pause" do
       pause = Pause.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
       assert_equal 0, pause.errors.size
     end
