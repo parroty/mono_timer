@@ -1,28 +1,8 @@
-== README
+# Mono Timer
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An Pomodoro-style 25:00 minutes timer application with notification feature. It's built with Ruby on Rails.
 
-Things you may want to cover:
+The main purpose of the development is learning about Ruby on Rails through actual applications rather than a sample code.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+The wiki page would become the storage for what I learned or struggled.
+- https://github.com/parroty/mono_timer/wiki
