@@ -3,7 +3,7 @@ require "test_helper"
 describe "timer display feature", :capybara do
   describe "when there's no timer" do
     before do
-      Timer.all.delete_all
+      Timer.delete_all
     end
 
     it "displays 1500 seconds (25:00)" do

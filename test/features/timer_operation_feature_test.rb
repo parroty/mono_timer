@@ -2,8 +2,8 @@ require "test_helper"
 
 describe "timer operation feature", :capybara do
   before do
-    Timer.all.delete_all
-    Pause.all.delete_all
+    Timer.delete_all
+    Pause.delete_all
   end
 
   describe "Pause" do

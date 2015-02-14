@@ -80,7 +80,7 @@ describe Timer do
 
   describe "current_timer" do
     before do
-      Timer.all.delete_all
+      Timer.delete_all
     end
 
     it "returns active timer" do
