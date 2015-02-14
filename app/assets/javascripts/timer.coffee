@@ -1,5 +1,6 @@
 window.countdownTimerId = null
-window.hasFocus = true
+window.lastFocus = true
+window.lastUpdated = null
 
 $ ->
   updateTimerDisplay(window.remainingSeconds)
@@ -13,12 +14,24 @@ $ ->
 
       updateTimerDisplay(window.remainingSeconds)
 
-      synchronizeTimer() if isFocusGained() == true
-      window.hasFocus = window.document.hasFocus()
+      if isFocusGained() == true || isResumed() == true
+        synchronizeTimer()
+
+      window.lastFocus   = hasFocus()
+      window.lastUpdated = currentTime()
     , 1000
 
 isFocusGained = ->
-  window.document.hasFocus() == true && window.hasFocus == false
+  hasFocus() == true && window.lastFocus == false
+
+isResumed = ->
+  currentTime() - window.lastUpdated > 5000
+
+currentTime = ->
+  new Date().getTime()
+
+hasFocus = ->
+  window.document.hasFocus()
 
 synchronizeTimer = ->
   $.ajax
