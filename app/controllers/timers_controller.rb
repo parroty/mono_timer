@@ -1,7 +1,7 @@
 class TimersController < ApplicationController
   def index
     @timer = Timer.current_timer
-    @last_completed_timer = Timer.last_completed_timer
+    @stats = TimerStats.new
   end
 
   def create

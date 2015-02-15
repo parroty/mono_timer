@@ -43,8 +43,9 @@
     </div>
 
     <div class="message">
-      <% if @last_completed_timer %>
-        Last timer completed at <%= to_display_time(@last_completed_timer.end_time) %>
+      <p><%= pluralize(@stats.completed_counts_on(Date.today), "timer") %> completed today.</p>
+      <% if @stats.last_completed_timer %>
+        <p>Last timer completed <%= time_ago_in_words(@stats.last_completed_timer.end_time) %> ago.</p>
       <% end %>
     </div>
   </div>

@@ -25,14 +25,6 @@ class Timer < ActiveRecord::Base
         timer
       end
     end
-
-    def last_completed_timer
-      Timer.order("id desc").where("end_time is not null").first
-    end
-
-    def completed_counts_at(date_or_time)
-      Timer.where("DATE(end_time) = ?", date_or_time.to_date).count
-    end
   end
 
   def active?

@@ -32,7 +32,7 @@ describe "timer display feature", :capybara do
 
     it "shows last completed time in the footer" do
       visit "/timers"
-      assert_content "Last timer completed at"
+      assert_content "Last timer completed"
     end
   end
 
