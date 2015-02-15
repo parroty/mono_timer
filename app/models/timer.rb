@@ -16,21 +16,27 @@ class Timer < ActiveRecord::Base
 
   validates_with ::TimeOverlapValidator
 
-  def self.current_timer
-    timer = Timer.order("id desc").first
-    if timer.nil? || timer.status == Status::COMPLETED
-      Timer.new
-    else
-      timer
+  class << self
+    def current_timer
+      timer = Timer.order("id desc").first
+      if timer.nil? || timer.status == Status::COMPLETED
+        Timer.new
+      else
+        timer
+      end
+    end
+
+    def last_completed_timer
+      Timer.order("id desc").where("end_time is not null").first
+    end
+
+    def completed_counts_at(date_or_time)
+      Timer.where("DATE(end_time) = ?", date_or_time.to_date).count
     end
   end
 
   def active?
     [Status::RUNNING, Status::PAUSED].include?(status)
-  end
-
-  def self.completed_counts_at(date_or_time)
-    Timer.where("DATE(end_time) = ?", date_or_time.to_date).count
   end
 
   def stop!

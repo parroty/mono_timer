@@ -41,6 +41,12 @@
       <%= link_to "History", { controller: "timers", action: "history"}, class: "btn btn-default" %>
       <%= link_to "Monitoring", sidekiq_web_path, class: "btn btn-default" %>
     </div>
+
+    <div class="message">
+      <% if @last_completed_timer %>
+        Last timer completed at <%= to_display_time(@last_completed_timer.end_time) %>
+      <% end %>
+    </div>
   </div>
 
   <%= javascript_tag do %>

@@ -6,10 +6,17 @@ describe "timer display feature", :capybara do
       Timer.delete_all
     end
 
-    it "displays 1500 seconds (25:00)" do
-      visit "/timers"
-      assert_content "25:00"
-      assert_match js_for_remaining_time(1500), page.body
+    describe "index" do
+      it "displays 1500 seconds (25:00)" do
+        visit "/timers"
+        assert_content "25:00"
+        assert_match js_for_remaining_time(1500), page.body
+      end
+
+      it "does not show last completed time in the footer" do
+        visit "/timers"
+        assert_no_content "Last timer completed at"
+      end
     end
 
     it "shows timer history page" do
@@ -18,7 +25,18 @@ describe "timer display feature", :capybara do
     end
   end
 
-  describe "when there's timer" do
+  describe "when there's completed timer" do
+    before do
+      Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
+    end
+
+    it "shows last completed time in the footer" do
+      visit "/timers"
+      assert_content "Last timer completed at"
+    end
+  end
+
+  describe "when there's not-completed timer" do
     before do
       Timecop.freeze(Time.now)
       Timer.create!(start_time: 10.minutes.ago)
