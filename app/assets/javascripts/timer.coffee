@@ -5,12 +5,13 @@ window.lastUpdated = null
 $ ->
   updateTimerDisplay(window.remainingSeconds)
 
-  if isCountingDown == 'true'
+  if isCountingDown == "true"
     countdownTimerId = setInterval ->
       if window.remainingSeconds > 0
         window.remainingSeconds -= 1
       else
         clearInterval(countdownTimerId)
+        refreshScreen()
 
       updateTimerDisplay(window.remainingSeconds)
 
@@ -36,10 +37,14 @@ hasFocus = ->
 synchronizeTimer = ->
   $.ajax
     async: true
-    type: 'GET'
+    type: "GET"
     url: "/timers/" + timerId
     success: (data, status, xhr) ->
       window.remainingSeconds = parseInt(data.remaining_seconds)
+      refreshScreen() if window.remainingSeconds <= 0
+
+refreshScreen = ->
+  location.reload()
 
 updateTimerDisplay = (remainingSeconds) ->
   $("#timer-time").text(convertSecondsToTimer(remainingSeconds))

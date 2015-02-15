@@ -1,4 +1,4 @@
-<div class='timer-container'>
+<div class="timer-container">
   <% if flash[:error] %>
     <div class="alert alert-danger alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -8,44 +8,44 @@
 
   <h1>Mono Timer</h1>
 
-  <div id='timer-time' class='timer-time'>
+  <div id="timer-time" class="timer-time">
     <%= seconds_to_timer_str(@timer.remaining_seconds) %>
   </div>
 
   <% if @timer.status == Timer::Status::INITIAL %>
     <%= button_to "Start",
-      { controller: 'timers', action: 'create' },
-        method: :post, class: 'btn btn-primary btn-xl' %>
+      { controller: "timers", action: "create" },
+        method: :post, class: "btn btn-primary btn-xl" %>
   <% else %>
     <% if @timer.id %>
       <% if @timer.status == Timer::Status::PAUSED %>
         <%= button_to "Stop",
-          { controller: 'timers', action: 'stop', id: @timer.id},
-            method: :post, class: 'btn btn-danger btn-xl' %>
+          { controller: "timers", action: "stop", id: @timer.id},
+            method: :post, class: "btn btn-danger btn-xl" %>
 
         <%= button_to "Resume",
-          { controller: 'timers', action: 'resume', id: @timer.id},
-            method: :post, class: 'btn btn-success btn-xl' %>
+          { controller: "timers", action: "resume", id: @timer.id},
+            method: :post, class: "btn btn-success btn-xl" %>
       <% end %>
 
       <% if @timer.status == Timer::Status::RUNNING %>
         <%= button_to "Pause",
-          { controller: 'timers', action: 'pause', id: @timer.id},
-            method: :post, class: 'btn btn-info btn-xl' %>
+          { controller: "timers", action: "pause", id: @timer.id},
+            method: :post, class: "btn btn-info btn-xl" %>
       <% end %>
     <% end %>
   <% end %>
 
-  <div class='footer'>
+  <div class="footer">
     <div class="btn-group" role="group">
-      <%= link_to "History", { controller: 'timers', action: 'history'}, class: "btn btn-default" %>
-      <%= link_to 'Monitoring', sidekiq_web_path, class: "btn btn-default" %>
+      <%= link_to "History", { controller: "timers", action: "history"}, class: "btn btn-default" %>
+      <%= link_to "Monitoring", sidekiq_web_path, class: "btn btn-default" %>
     </div>
   </div>
 
   <%= javascript_tag do %>
-    window.remainingSeconds = '<%= @timer.remaining_seconds %>';
-    window.isCountingDown   = '<%= @timer.status == Timer::Status::RUNNING %>';
-    window.timerId          = '<%= @timer.id %>';
+    window.remainingSeconds = "<%= @timer.remaining_seconds %>";
+    window.isCountingDown   = "<%= @timer.status == Timer::Status::RUNNING %>";
+    window.timerId          = "<%= @timer.id %>";
   <% end %>
 </div>
