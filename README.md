@@ -1,8 +1,10 @@
 # Mono Timer
 
 [![Build Status](http://img.shields.io/travis/parroty/mono_timer.svg)][travis]
+[![Coverage Status](http://img.shields.io/coveralls/parroty/mono_timer.svg)][coveralls]
 
 [travis]: https://travis-ci.org/parroty/mono_timer
+[coveralls]: https://coveralls.io/r/parroty/mono_timer
 
 An Pomodoro-style 25:00 minutes timer application with notification feature. It's built with Ruby on Rails.
 
