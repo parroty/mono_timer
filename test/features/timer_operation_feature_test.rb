@@ -2,18 +2,18 @@ require "test_helper"
 
 describe "timer operation feature", :capybara do
   before do
+    Timecop.freeze(Time.now)
     Timer.delete_all
     Pause.delete_all
   end
 
+  after do
+    Timecop.return
+  end
+
   describe "Pause" do
     before do
-      Timecop.freeze(Time.now)
       Timer.create(start_time: 5.minutes.ago, end_time: nil)
-    end
-
-    after do
-      Timecop.return
     end
 
     it "pauses timer returns not counting-down timer" do

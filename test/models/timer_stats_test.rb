@@ -3,17 +3,21 @@ require "test_helper"
 describe TimerStats do
   describe "completed_counts_at" do
     before do
-      @today = Time.mktime(2015, 1, 1, 15, 0, 0)
+      Timecop.freeze(Time.mktime(2015, 1, 1, 15, 0, 0))
+    end
+
+    after do
+      Timecop.return
     end
 
     it "returns 0 if there's no completed timer" do
-      Timer.create(start_time: 5.minutes.ago, end_time: nil)
-      assert_equal 0, TimerStats.new.completed_counts_on(@today.to_date)
+      Timer.create(start_time: 30.minutes.ago, end_time: nil)
+      assert_equal 0, TimerStats.new.completed_counts_on(Date.today)
     end
 
     it "returns 1 if there's one completed timer" do
-      Timer.create(start_time: @today - 30.minutes, end_time: @today)
-      assert_equal 1, TimerStats.new.completed_counts_on(@today.to_date)
+      Timer.create(start_time: 30.minutes.ago, end_time: Time.zone.now)
+      assert_equal 1, TimerStats.new.completed_counts_on(Date.today)
     end
   end
 
