@@ -1,6 +1,10 @@
 require "test_helper"
 
 describe TimerStats do
+  before do
+    Timer.delete_all
+  end
+
   describe "completed_counts_at" do
     before do
       Timecop.freeze(Time.mktime(2015, 1, 1, 15, 0, 0))
@@ -22,10 +26,6 @@ describe TimerStats do
   end
 
   describe "last_completed_timer" do
-    before do
-      Timer.delete_all
-    end
-
     it "returns last completed timer" do
       _older_timer =
         Timer.create(start_time: 40.minutes.ago, end_time: 15.minutes.ago)
