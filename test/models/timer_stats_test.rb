@@ -7,7 +7,7 @@ describe TimerStats do
 
   describe "completed_counts_at" do
     before do
-      Timecop.freeze(Date.today.beginning_of_day + 1.hour)
+      Timecop.freeze(Time.zone.now.utc.beginning_of_day + 1.hour)
     end
 
     after do
