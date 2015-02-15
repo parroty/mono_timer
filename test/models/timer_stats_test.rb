@@ -8,7 +8,7 @@ describe TimerStats do
 
     it "returns 0 if there's no completed timer" do
       Timer.create(start_time: 5.minutes.ago, end_time: nil)
-      assert_equal 0, TimerStats.new.completed_counts_on(@today)
+      assert_equal 0, TimerStats.new.completed_counts_on(@today.to_date)
     end
 
     it "returns 1 if there's one completed timer" do
