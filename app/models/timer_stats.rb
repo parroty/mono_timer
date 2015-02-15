@@ -4,6 +4,6 @@ class TimerStats
   end
 
   def completed_counts_on(date)
-    Timer.where("DATE(end_time) = ?", date).count
+    Timer.where(end_time: (date.beginning_of_day)..(date.end_of_day)).count
   end
 end
