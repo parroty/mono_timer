@@ -70,7 +70,6 @@ class Timer < ActiveRecord::Base
     when Status::RUNNING   then calculate_remaining_seconds
     when Status::PAUSED    then calculate_remaining_seconds
     when Status::COMPLETED then 0
-    else fail "Invalid status value: #{status}"
     end
   end
 
