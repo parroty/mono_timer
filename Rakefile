@@ -9,3 +9,8 @@ namespace :test do
     Rake::Task["test"].execute
   end
 end
+
+require "rubocop/rake_task"
+RuboCop::RakeTask.new
+
+task default: [:rubocop, :test]
