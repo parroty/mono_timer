@@ -3,11 +3,13 @@ require "#{Rails.root}/app/validators/time_overwrap_validator"
 class Timer < ActiveRecord::Base
   INITIAL_TIME = 25 * 60
 
-  module Status
-    INITIAL   = 1
-    RUNNING   = 2
-    PAUSED    = 3
-    COMPLETED = 4
+  class Status
+    include Ruby::Enum
+
+    define :INITIAL,   "INITIAL"
+    define :RUNNING,   "RUNNING"
+    define :PAUSED,    "PAUSED"
+    define :COMPLETED, "COMPLETED"
   end
 
   paginates_per 50

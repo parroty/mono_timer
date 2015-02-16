@@ -56,6 +56,7 @@ group :development, :test do
   gem "web-console", "~> 2.0"
 end
 
+gem "ruby-enum"
 gem "kaminari"
 gem "unicorn"
 gem "pushover"
