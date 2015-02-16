@@ -7,7 +7,7 @@ describe TimerStats do
 
   describe "completed_counts_at" do
     before do
-      Timecop.freeze(Time.zone.now.utc.beginning_of_day + 1.hour)
+      Timecop.freeze(Time.zone.now.beginning_of_day + 1.hour)
     end
 
     after do
@@ -16,12 +16,12 @@ describe TimerStats do
 
     it "returns 0 if there's no completed timer" do
       Timer.create(start_time: 30.minutes.ago, end_time: nil)
-      assert_equal 0, TimerStats.new.completed_counts_on(Date.today)
+      assert_equal 0, TimerStats.new.completed_counts_on(Time.zone.today)
     end
 
     it "returns 1 if there's one completed timer" do
       Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
-      assert_equal 1, TimerStats.new.completed_counts_on(Date.today)
+      assert_equal 1, TimerStats.new.completed_counts_on(Time.zone.today)
     end
   end
 

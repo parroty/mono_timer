@@ -15,7 +15,7 @@ class StopTimerWorker
   private
 
   def send_notification
-    count = TimerStats.new.completed_counts_on(Date.today) + 1
+    count = TimerStats.new.completed_counts_on(Time.zone.today) + 1
     message = "#{count.ordinalize} timer of today completed."
     PushoverNotifier.new.notify(message)
   end
