@@ -4,4 +4,3 @@ Rails.application.load_tasks
 
 require "rubocop/rake_task"
 RuboCop::RakeTask.new
-
