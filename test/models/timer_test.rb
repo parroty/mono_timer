@@ -86,7 +86,6 @@ describe Timer do
       assert_equal Timer::Status::RUNNING, timer.status
     end
 
-
     it "does not its status and end_time of already stopped timer" do
       original_end_time = 5.minutes.ago
       timer = Timer.create(

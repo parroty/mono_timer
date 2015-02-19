@@ -1,5 +1,7 @@
 class TimersController < ApplicationController
-  ERROR_MESSAGE = "Failed to change the timer status, as it has already been changed in the background."
+  ERROR_MESSAGE =
+    "Failed to change the timer status, as it has already been changed " \
+    "in the background."
 
   def index
     @timer = Timer.current_timer
@@ -7,11 +9,12 @@ class TimersController < ApplicationController
   end
 
   def create
-    if new_timer = Timer.start
+    if (new_timer = Timer.start)
       StopTimerService.create(new_timer)
       redirect_to timers_path
     else
-      redirect_to timers_path, flash: { error: "A timer have already been started." }
+      message = "A timer have already been started."
+      redirect_to timers_path, flash: { error: message }
     end
   end
 
