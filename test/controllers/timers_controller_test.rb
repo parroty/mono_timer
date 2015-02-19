@@ -47,19 +47,54 @@ describe TimersController do
     must_render_template :history
   end
 
-  it "stops timer and gets redirected to index page" do
-    post :stop, id: @timer.id
-    assert_redirected_to timers_path
-  end
+  describe "operations" do
+    before do
+      @running_timer = Timer.create!(start_time: 30.minutes.ago)
+      @paused_timer  = Timer.create!(start_time: 30.minutes.ago)
+      @paused_timer.pauses.create!(start_time: 3.minutes.ago, end_time: nil)
+    end
 
-  it "resumes timer and gets redirected to index page" do
-    post :resume, id: @timer.id
-    assert_redirected_to timers_path
-  end
+    describe "stop" do
+      it "succeeds to stop paused timer" do
+        post :stop, id: @paused_timer.id
+        assert_nil flash[:error]
+        assert_redirected_to timers_path
+      end
 
-  it "pauses timer and gets redirected to index page" do
-    post :pause, id: @timer.id
-    assert_redirected_to timers_path
+      it "fails to stop running timer" do
+        post :stop, id: @running_timer.id
+        refute_nil flash[:error]
+        assert_redirected_to timers_path
+      end
+    end
+
+    describe "resume" do
+      it "succeeds to resume paused timer" do
+        post :resume, id: @paused_timer.id
+        assert_nil flash[:error]
+        assert_redirected_to timers_path
+      end
+
+      it "fails to resume running timer" do
+        post :resume, id: @running_timer.id
+        refute_nil flash[:error]
+        assert_redirected_to timers_path
+      end
+    end
+
+    describe "pause" do
+      it "succeeds to pause running timer" do
+        post :pause, id: @running_timer.id
+        assert_nil flash[:error]
+        assert_redirected_to timers_path
+      end
+
+      it "fails to pause paused timer" do
+        post :pause, id: @paused_timer.id
+        refute_nil flash[:error]
+        assert_redirected_to timers_path
+      end
+    end
   end
 
   it "deletes timer and gets redirected to history page" do

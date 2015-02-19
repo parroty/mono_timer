@@ -27,25 +27,35 @@ class Timer < ActiveRecord::Base
         timer
       end
     end
+
+    def start
+      return false if Timer.current_timer.active?
+      Timer.create(start_time: Time.zone.now)
+    end
   end
 
   def active?
     [Status::RUNNING, Status::PAUSED].include?(status)
   end
 
-  def stop!
-    return unless end_time.nil?
+  def stop
+    return false unless status == Status::PAUSED
+    stop!
+  end
 
+  def stop!
     update!(end_time: Time.zone.now)
-    finish_pauses
+    complete_pauses
   end
 
   def pause
+    return false unless status == Status::RUNNING
     pauses.create!(start_time: Time.zone.now)
   end
 
   def resume
-    finish_pauses
+    return false unless status == Status::PAUSED
+    complete_pauses
   end
 
   def status
@@ -82,7 +92,7 @@ class Timer < ActiveRecord::Base
     [remaining, 0].max
   end
 
-  def finish_pauses
+  def complete_pauses
     pauses.each(&:complete)
   end
 

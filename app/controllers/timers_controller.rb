@@ -1,17 +1,17 @@
 class TimersController < ApplicationController
+  ERROR_MESSAGE = "Failed to change the timer status, as it has already been changed in the background."
+
   def index
     @timer = Timer.current_timer
     @stats = TimerStats.new
   end
 
   def create
-    if Timer.current_timer.active?
-      message = "Cannot create a new timer before completing the previous one."
-      redirect_to timers_path, flash: { error: message }
-    else
-      new_timer = Timer.create(start_time: Time.zone.now)
+    if new_timer = Timer.start
       StopTimerService.create(new_timer)
       redirect_to timers_path
+    else
+      redirect_to timers_path, flash: { error: "A timer have already been started." }
     end
   end
 
@@ -27,21 +27,30 @@ class TimersController < ApplicationController
   end
 
   def stop
-    timer.stop!
-    StopTimerService.destroy(timer)
-    redirect_to timers_path
+    if timer.stop
+      StopTimerService.destroy(timer)
+      redirect_to timers_path
+    else
+      redirect_to timers_path, flash: { error: ERROR_MESSAGE }
+    end
   end
 
   def pause
-    timer.pause
-    StopTimerService.destroy(timer)
-    redirect_to timers_path
+    if timer.pause
+      StopTimerService.destroy(timer)
+      redirect_to timers_path
+    else
+      redirect_to timers_path, flash: { error: ERROR_MESSAGE }
+    end
   end
 
   def resume
-    timer.resume
-    StopTimerService.create(timer)
-    redirect_to timers_path
+    if timer.resume
+      StopTimerService.create(timer)
+      redirect_to timers_path
+    else
+      redirect_to timers_path, flash: { error: ERROR_MESSAGE }
+    end
   end
 
   def destroy

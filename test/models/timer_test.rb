@@ -68,19 +68,30 @@ describe Timer do
     end
   end
 
-  describe "stop!" do
-    it "changes active timer to COMPLETED status" do
+  describe "stop" do
+    it "changes PAUSED timer to COMPLETED status" do
       timer = Timer.create(start_time: 5.minutes.ago, end_time: nil)
-      timer.stop!
+      timer.pauses.create!(start_time: 3.minutes.ago, end_time: nil)
+
+      timer.stop
 
       assert_equal Timer::Status::COMPLETED, timer.status
     end
+
+    it "fails to change RUNNING timer to COMPLETED status" do
+      timer = Timer.create(start_time: 5.minutes.ago, end_time: nil)
+
+      timer.stop
+
+      assert_equal Timer::Status::RUNNING, timer.status
+    end
+
 
     it "does not its status and end_time of already stopped timer" do
       original_end_time = 5.minutes.ago
       timer = Timer.create(
         start_time: 30.minutes.ago, end_time: original_end_time)
-      timer.stop!
+      timer.stop
 
       assert_equal original_end_time, timer.end_time
       assert_equal Timer::Status::COMPLETED, timer.status
