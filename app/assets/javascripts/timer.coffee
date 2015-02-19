@@ -1,6 +1,7 @@
 window.countdownTimerId = null
 window.lastFocus = true
 window.lastUpdated = null
+window.titlePrefix = document.title
 
 $ ->
   updateTimerDisplay(window.remainingSeconds)
@@ -47,7 +48,9 @@ refreshScreen = ->
   location.reload()
 
 updateTimerDisplay = (remainingSeconds) ->
-  $("#timer-time").text(convertSecondsToTimer(remainingSeconds))
+  timerString = convertSecondsToTimer(remainingSeconds)
+  $("#timer-time").text(timerString)
+  document.title = window.titlePrefix + " " + timerString
 
 convertSecondsToTimer = (count) ->
   minutes = Math.floor(count / 60)
