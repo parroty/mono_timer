@@ -30,30 +30,15 @@ class TimersController < ApplicationController
   end
 
   def stop
-    if timer.stop
-      StopTimerService.destroy(timer)
-      redirect_to timers_path
-    else
-      redirect_to timers_path, flash: { error: ERROR_MESSAGE }
-    end
+    change_timer_status(:stop, :destroy)
   end
 
   def pause
-    if timer.pause
-      StopTimerService.destroy(timer)
-      redirect_to timers_path
-    else
-      redirect_to timers_path, flash: { error: ERROR_MESSAGE }
-    end
+    change_timer_status(:pause, :destroy)
   end
 
   def resume
-    if timer.resume
-      StopTimerService.create(timer)
-      redirect_to timers_path
-    else
-      redirect_to timers_path, flash: { error: ERROR_MESSAGE }
-    end
+    change_timer_status(:resume, :create)
   end
 
   def destroy
@@ -65,5 +50,14 @@ class TimersController < ApplicationController
 
   def timer
     @timer ||= Timer.find(params[:id])
+  end
+
+  def change_timer_status(timer_operation, service_operation)
+    if timer.send(timer_operation)
+      StopTimerService.send(service_operation, timer)
+      redirect_to timers_path
+    else
+      redirect_to timers_path, flash: { error: ERROR_MESSAGE }
+    end
   end
 end
