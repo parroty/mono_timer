@@ -27,7 +27,7 @@ describe "timer display feature", :capybara do
 
   describe "when there's completed timer" do
     before do
-      Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
+      FactoryGirl.create(:completed)
     end
 
     it "shows last completed time in the footer" do
@@ -36,7 +36,7 @@ describe "timer display feature", :capybara do
     end
   end
 
-  describe "when there's not-completed timer" do
+  describe "when there's non-completed timer" do
     before do
       Timecop.freeze(Time.now)
       Timer.create!(start_time: 10.minutes.ago)

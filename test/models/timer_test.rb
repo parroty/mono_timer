@@ -21,18 +21,17 @@ describe Timer do
   describe "status" do
     describe "with no pause" do
       it "returns INITIAL status for timer with no start_time" do
-        timer = Timer.create(start_time: nil, end_time: nil)
+        timer = FactoryGirl.create(:initial)
         assert_equal Timer::Status::INITIAL, timer.status
       end
 
       it "returns RUNNING status for timer with no end_time" do
-        timer = Timer.create(start_time: 5.minutes.ago, end_time: nil)
+        timer = FactoryGirl.create(:running)
         assert_equal Timer::Status::RUNNING, timer.status
       end
 
       it "returns COMPLETED status for timer with end_time" do
-        timer =
-          Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
+        timer = FactoryGirl.create(:completed)
         assert_equal Timer::Status::COMPLETED, timer.status
       end
     end
@@ -55,6 +54,18 @@ describe Timer do
     end
   end
 
+  describe "passed_seconds" do
+    it "returns passed seconds for active timer within 25:00" do
+      timer = Timer.create(start_time: 10.minutes.ago)
+      assert_equal 10 * 60, timer.passed_seconds
+    end
+
+    it "returns 0 for a timer with start_timer = nil" do
+      timer = Timer.new
+      assert_equal 0, timer.passed_seconds
+    end
+  end
+
   describe "remaining_seconds" do
     it "returns remaining time for active timer within 25:00" do
       timer = Timer.create(start_time: 10.minutes.ago)
@@ -63,33 +74,35 @@ describe Timer do
     end
 
     it "returns 0 remaining time for active timer before 25:00 ago" do
-      timer = Timer.create(start_time: 1.hour.ago)
+      timer = Timer.create(start_time: 30.minutes.ago)
+      assert_equal 0, timer.remaining_seconds
+    end
+
+    it "returns 0 remaining time for completed timer" do
+      timer = FactoryGirl.create(:completed)
       assert_equal 0, timer.remaining_seconds
     end
   end
 
   describe "stop" do
     it "changes PAUSED timer to COMPLETED status" do
-      timer = Timer.create(start_time: 5.minutes.ago, end_time: nil)
-      timer.pauses.create!(start_time: 3.minutes.ago, end_time: nil)
-
+      timer = FactoryGirl.create(:paused)
       timer.stop
 
       assert_equal Timer::Status::COMPLETED, timer.status
     end
 
     it "fails to change RUNNING timer to COMPLETED status" do
-      timer = Timer.create(start_time: 5.minutes.ago, end_time: nil)
-
+      timer = FactoryGirl.create(:running)
       timer.stop
 
       assert_equal Timer::Status::RUNNING, timer.status
     end
 
-    it "does not its status and end_time of already stopped timer" do
-      original_end_time = 5.minutes.ago
-      timer = Timer.create(
-        start_time: 30.minutes.ago, end_time: original_end_time)
+    it "does not change the status and end_time of already stopped timer" do
+      timer = FactoryGirl.create(:completed)
+      original_end_time = timer.end_time
+
       timer.stop
 
       assert_equal original_end_time, timer.end_time
@@ -103,13 +116,13 @@ describe Timer do
     end
 
     it "returns active timer" do
-      timer = Timer.create(start_time: 5.minutes.ago, end_time: nil)
+      timer = FactoryGirl.create(:running)
 
       assert_equal Timer::Status::RUNNING, timer.status
     end
 
     it "returns new timer if latest timer is completed" do
-      Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
+      FactoryGirl.create(:completed)
       timer = Timer.current_timer
 
       assert_equal Timer::Status::INITIAL, timer.status

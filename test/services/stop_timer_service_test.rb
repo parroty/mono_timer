@@ -7,7 +7,8 @@ describe StopTimerService do
 
   describe "create" do
     it "invokes StopTimerWorker#perform_in with correct parameters" do
-      StopTimerWorker.expects(:perform_in).with(20 * 60, @timer.id, true)
+      expected_time = (25 - 5) * 60
+      StopTimerWorker.expects(:perform_in).with(expected_time, @timer.id, true)
 
       StopTimerService.create(@timer)
     end

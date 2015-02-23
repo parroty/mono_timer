@@ -71,6 +71,7 @@ class Timer < ActiveRecord::Base
   end
 
   def passed_seconds
+    return 0 unless start_time
     ((end_time || Time.zone.now) - start_time).to_i
   end
 

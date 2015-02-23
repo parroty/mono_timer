@@ -15,12 +15,12 @@ describe TimerStats do
     end
 
     it "returns 0 if there's no completed timer" do
-      Timer.create(start_time: 30.minutes.ago, end_time: nil)
+      FactoryGirl.create(:running)
       assert_equal 0, TimerStats.new.completed_counts_on(Time.zone.today)
     end
 
     it "returns 1 if there's one completed timer" do
-      Timer.create(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
+      FactoryGirl.create(:completed)
       assert_equal 1, TimerStats.new.completed_counts_on(Time.zone.today)
     end
   end
@@ -35,8 +35,8 @@ describe TimerStats do
       assert_equal newer_timer, TimerStats.new.last_completed_timer
     end
 
-    it "returns nil if there's no completed timer" do
-      Timer.create(start_time: 5.minutes.ago, end_time: nil)
+    it "returns nil if there's only non-completed timer" do
+      FactoryGirl.create(:running)
       assert_equal nil, TimerStats.new.last_completed_timer
     end
   end

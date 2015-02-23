@@ -2,7 +2,7 @@ require "test_helper"
 
 describe TimersController do
   before do
-    @timer = Timer.create!(start_time: 30.minutes.ago, end_time: 5.minutes.ago)
+    @timer = FactoryGirl.create(:completed)
   end
 
   it "gets index" do
@@ -19,8 +19,8 @@ describe TimersController do
       assert_redirected_to timers_path
     end
 
-    it "fails to create timer and throws error message" do
-      Timer.create!(start_time: 5.minutes.ago)
+    it "fails to create timer if previous one is running" do
+      FactoryGirl.create(:running)
       assert_difference "Timer.count", 0, "A Timer should not be created" do
         post :create
       end
@@ -49,9 +49,8 @@ describe TimersController do
 
   describe "operations" do
     before do
-      @running_timer = Timer.create!(start_time: 30.minutes.ago)
-      @paused_timer  = Timer.create!(start_time: 30.minutes.ago)
-      @paused_timer.pauses.create!(start_time: 3.minutes.ago, end_time: nil)
+      @running_timer = FactoryGirl.create(:running)
+      @paused_timer  = FactoryGirl.create(:paused)
     end
 
     describe "stop" do

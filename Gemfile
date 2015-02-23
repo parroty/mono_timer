@@ -22,11 +22,12 @@ end
 
 group :test do
   gem "simplecov", require: false
-  gem 'coveralls', require: false
+  gem "coveralls", require: false
 end
 
 group :development, :test do
   gem "byebug"
+  gem "factory_girl_rails"
   gem "minitest-rails-capybara"
   gem "minitest-reporters"
   gem "mocha", require: "mocha/api"

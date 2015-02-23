@@ -36,7 +36,7 @@ describe StopTimerWorker do
 
   describe "timer with remaining time" do
     before do
-      @timer = Timer.create(start_time: 5.minutes.ago, end_time: nil)
+      @timer = FactoryGirl.create(:running)
     end
 
     describe "perform" do

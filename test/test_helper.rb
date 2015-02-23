@@ -17,6 +17,7 @@ require "minitest/rails/capybara"
 require "minitest/reporters"
 require "mocha/setup"
 require "sidekiq/testing"
+require "factory_girl_rails"
 
 Sidekiq::Testing.fake!
 
