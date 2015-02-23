@@ -7,6 +7,7 @@ describe StopTimerWorker do
 
   describe "timer with no remaining time" do
     before do
+      Timer.delete_all
       @timer = Timer.create(start_time: 30.minutes.ago, end_time: nil)
     end
 
@@ -26,7 +27,7 @@ describe StopTimerWorker do
 
     it "stops timer and send notification with option = true" do
       PushoverNotifier.any_instance.expects(:notify).with do |param|
-        param =~ /timer of today completed/
+        param =~ /1st timer of today completed/
       end
 
       StopTimerWorker.new.perform(@timer.id, true)
