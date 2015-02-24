@@ -26,7 +26,7 @@ class TimersController < ApplicationController
   end
 
   def history
-    @timers = Timer.includes(:pauses).page(params[:page]).order("id desc")
+    @timers = Timer.page(params[:page]).order("id desc")
   end
 
   def stop

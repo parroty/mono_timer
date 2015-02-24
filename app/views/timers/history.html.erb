@@ -23,10 +23,10 @@
         <td><%= to_display_time(timer.end_time) %></td>
         <td><%= seconds_to_timer_str(timer.passed_seconds) %></td>
         <td>
-          <% if timer.pauses.count > 0 %>
-            <%= link_to timer.pauses.count, timer_pauses_path(timer) %>
+          <% if timer.pauses_count > 0 %>
+            <%= link_to timer.pauses_count, timer_pauses_path(timer) %>
           <% else %>
-            <%= timer.pauses.count %>
+            <%= timer.pauses_count %>
           <% end %>
           </td>
         <td>
