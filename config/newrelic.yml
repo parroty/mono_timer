@@ -203,6 +203,7 @@ development:
 
   # Enable textmate links
   # textmate: true
+  rules.ignore_url_regexes: ["^/assets"]
 
 test:
   <<: *default_settings
