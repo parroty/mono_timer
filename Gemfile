@@ -16,6 +16,7 @@ group :production do
 end
 
 group :development do
+  gem "bullet"
   gem "pry-rails"
   gem "rubocop", require: false
 end
