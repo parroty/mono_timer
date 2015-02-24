@@ -31,6 +31,7 @@ group :development, :test do
   gem "minitest-rails-capybara"
   gem "minitest-reporters"
   gem "mocha", require: "mocha/api"
+  gem "newrelic_rpm"
   gem "spring"
   gem "sqlite3"
   gem "timecop"
