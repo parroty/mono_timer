@@ -41,6 +41,7 @@ end
 
 gem "ruby-enum"
 gem "kaminari"
+gem "mailgun-ruby", "~> 1.0.3", require: "mailgun"
 gem "unicorn"
 gem "pushover"
 gem "sidekiq"
