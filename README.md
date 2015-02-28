@@ -14,3 +14,5 @@ The main purpose of the development is learning about Ruby on Rails through actu
 
 The wiki page would become the storage for what I learned or struggled.
 - https://github.com/parroty/mono_timer/wiki
+
+[![screenshot](https://gist.github.com/parroty/624e44790cf7e35b22f7/raw/a6c10c8a3ac43b45cdb46eb514fe36126a0c6ba3/mono_timer.png)](https://github.com/parroty/mono_timer)
