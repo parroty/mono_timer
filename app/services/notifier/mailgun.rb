@@ -6,6 +6,10 @@ module Notifier
       def configure
         yield self
       end
+
+      def enabled
+        !api_key.nil? && !domain.nil? && !address.nil?
+      end
     end
 
     def initialize
@@ -13,6 +17,7 @@ module Notifier
     end
 
     def notify(message, title = "Mono Timer")
+      return unless Mailgun.enabled
       email = create_email(title, message)
       @client.send_message(Mailgun.domain, email)
     end

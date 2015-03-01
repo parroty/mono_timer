@@ -1,19 +1,30 @@
 require "test_helper"
 
 describe Notifier::Mailgun do
-  describe "notify" do
-    before do
-      Notifier::Mailgun.configure do |config|
-        config.api_key = "test_api_key"
-        config.domain  = "test_domain"
-        config.address = "test@test_domain.com"
-      end
+  before do
+    Notifier::Mailgun.configure do |config|
+      config.api_key = "test_api_key"
+      config.domain  = "test_domain"
+      config.address = "test@test_domain.com"
     end
+    @api_key = Notifier::Mailgun.api_key
+    @domain  = Notifier::Mailgun.domain
+    @address = Notifier::Mailgun.address
+  end
 
+  describe "configure" do
+    it "prepares mailgun parameters" do
+      assert_equal "test_api_key", @api_key
+      assert_equal "test_domain",  @domain
+      assert_equal "test@test_domain.com", @address
+    end
+  end
+
+  describe "notify" do
     it "sends message with default title" do
       expected_message = {
-        from:    "test@test_domain.com",
-        to:      "test@test_domain.com",
+        from:    @address,
+        to:      @address,
         subject: "Mono Timer",
         text:    "Sample Message"
       }
@@ -26,8 +37,8 @@ describe Notifier::Mailgun do
 
     it "sends message with custom title" do
       expected_message = {
-        from:    "test@test_domain.com",
-        to:      "test@test_domain.com",
+        from:    @address,
+        to:      @address,
         subject: "Sample Title",
         text:    "Sample Message"
       }
