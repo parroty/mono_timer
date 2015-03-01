@@ -21,32 +21,48 @@ describe Notifier::Mailgun do
   end
 
   describe "notify" do
-    it "sends message with default title" do
-      expected_message = {
-        from:    @address,
-        to:      @address,
-        subject: "Mono Timer",
-        text:    "Sample Message"
-      }
+    describe "with valid configuration" do
+      it "sends message with default title" do
+        expected_message = {
+          from:    @address,
+          to:      @address,
+          subject: "Mono Timer",
+          text:    "Sample Message"
+        }
 
-      Mailgun::Client.any_instance.stubs(:send_message)
-        .with("test_domain", expected_message)
+        Mailgun::Client.any_instance.stubs(:send_message)
+          .with("test_domain", expected_message)
 
-      Notifier::Mailgun.new.notify("Sample Message")
+        Notifier::Mailgun.new.notify("Sample Message")
+      end
+
+      it "sends message with custom title" do
+        expected_message = {
+          from:    @address,
+          to:      @address,
+          subject: "Sample Title",
+          text:    "Sample Message"
+        }
+
+        Mailgun::Client.any_instance.stubs(:send_message)
+          .with("test_domain", expected_message)
+
+        Notifier::Mailgun.new.notify("Sample Message", "Sample Title")
+      end
     end
 
-    it "sends message with custom title" do
-      expected_message = {
-        from:    @address,
-        to:      @address,
-        subject: "Sample Title",
-        text:    "Sample Message"
-      }
+    describe "with invalid configuration" do
+      before do
+        Notifier::Mailgun.configure do |config|
+          config.api_key = nil
+        end
+      end
 
-      Mailgun::Client.any_instance.stubs(:send_message)
-        .with("test_domain", expected_message)
+      it "should not send notification" do
+        Mailgun::Client.any_instance.stubs(:send_message).never
 
-      Notifier::Mailgun.new.notify("Sample Message", "Sample Title")
+        Notifier::Mailgun.new.notify("Sample Message", "Sample Title")
+      end
     end
   end
 end

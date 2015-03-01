@@ -61,5 +61,19 @@ describe Notifier::Pushover do
         assert_match "error_message_body", error_message.to_s
       end
     end
+
+    describe "with invalid configuration" do
+      before do
+        Notifier::Pushover.configure do |config|
+          config.user = nil
+        end
+      end
+
+      it "should not send notification" do
+        ::Pushover.expects(:notification).never
+
+        Notifier::Pushover.new.notify("Sample Message")
+      end
+    end
   end
 end
