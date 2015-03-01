@@ -6,6 +6,7 @@ class TimersController < ApplicationController
   def index
     @timer = Timer.current_timer
     @stats = TimerStats.new
+    @notifier_status = NotifierStatus.create
   end
 
   def create

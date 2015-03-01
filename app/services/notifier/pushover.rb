@@ -10,6 +10,10 @@ module Notifier
       def enabled
         !user.nil? && !token.nil?
       end
+
+      def name
+        "Pushover"
+      end
     end
 
     def notify(message, title = "Mono Timer")

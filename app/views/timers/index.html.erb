@@ -47,6 +47,16 @@
       <% if @stats.last_completed_timer %>
         <p>Last timer completed <%= time_ago_in_words(@stats.last_completed_timer.end_time) %> ago.</p>
       <% end %>
+
+      Notifications:
+      <% @notifier_status.each do |notifier| %>
+        <% if notifier.enabled %>
+          <i class="fa fa-check" title="Enabled"></i>
+        <% else %>
+          <i class="fa fa-times" title="Disabled"></i>
+        <% end %>
+        <%= notifier.name %>
+      <% end %>
     </div>
   </div>
 

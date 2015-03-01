@@ -10,6 +10,10 @@ module Notifier
       def enabled
         !api_key.nil? && !domain.nil? && !address.nil?
       end
+
+      def name
+        "Mailgun"
+      end
     end
 
     def initialize
