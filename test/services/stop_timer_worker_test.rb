@@ -26,8 +26,11 @@ describe StopTimerWorker do
     end
 
     it "stops timer and send notification with option = true" do
-      PushoverNotifier.any_instance.expects(:notify).with do |param|
-        param =~ /1st timer of today completed/
+      notifiers = [Notifier::Pushover, Notifier::Mailgun]
+      notifiers.each do |notifier|
+        notifier.any_instance.expects(:notify).with do |param|
+          param =~ /1st timer of today completed/
+        end
       end
 
       StopTimerWorker.new.perform(@timer.id, true)

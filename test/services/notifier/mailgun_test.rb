@@ -1,9 +1,9 @@
 require "test_helper"
 
-describe MailgunNotifier do
+describe Notifier::Mailgun do
   describe "notify" do
     before do
-      MailgunNotifier.configure do |config|
+      Notifier::Mailgun.configure do |config|
         config.api_key = "test_api_key"
         config.domain  = "test_domain"
         config.address = "test@test_domain.com"
@@ -21,7 +21,7 @@ describe MailgunNotifier do
       Mailgun::Client.any_instance.stubs(:send_message)
         .with("test_domain", expected_message)
 
-      MailgunNotifier.new.notify("Sample Message")
+      Notifier::Mailgun.new.notify("Sample Message")
     end
 
     it "sends message with custom title" do
@@ -35,7 +35,7 @@ describe MailgunNotifier do
       Mailgun::Client.any_instance.stubs(:send_message)
         .with("test_domain", expected_message)
 
-      MailgunNotifier.new.notify("Sample Message", "Sample Title")
+      Notifier::Mailgun.new.notify("Sample Message", "Sample Title")
     end
   end
 end
