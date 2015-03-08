@@ -1,0 +1,8 @@
+{
+  "name": "mono_timer",
+  "description": "Pomodoro-style 25 minutes timer rails-app with notification feature.",
+  "addons": [
+    "mailgun",
+    "redistogo"
+  ]
+}
